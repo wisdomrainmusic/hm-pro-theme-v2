@@ -244,10 +244,14 @@ add_action( 'wp_enqueue_scripts', function () {
 
 	/**
 	 * Conditional assets (mobile-first performance):
-	 * - Mega menu assets: only when a Primary menu is assigned (filterable).
-	 * - Mobile header JS: only when a mobile menu exists OR header builder layout is present (filterable).
+	 * - Mega menu assets: only when a menu exists (filterable).
+	 * - Mobile header JS: only when a menu exists OR header builder layout is present (filterable).
 	 */
-	$should_enqueue_mega = has_nav_menu( 'primary' ) || has_nav_menu( 'hm_primary' ) || has_nav_menu( 'topbar' );
+	$should_enqueue_mega =
+		has_nav_menu( 'primary' ) ||
+		has_nav_menu( 'hm_primary' ) ||
+		has_nav_menu( 'topbar' ) ||
+		has_nav_menu( 'mobile_menu' );
 	$should_enqueue_mega = (bool) apply_filters( 'hmpro/should_enqueue_mega_menu_assets', $should_enqueue_mega );
 	if ( $should_enqueue_mega ) {
 		wp_enqueue_style(
