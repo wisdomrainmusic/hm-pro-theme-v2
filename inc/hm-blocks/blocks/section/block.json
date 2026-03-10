@@ -1,0 +1,30 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "hmpro/section",
+  "title": "HM Section",
+  "category": "hmpro",
+  "icon": "screenoptions",
+  "description": "Layout section wrapper for landing pages (token-based styling).",
+  "supports": {
+    "align": ["wide", "full"],
+    "anchor": true,
+    "spacing": {
+      "padding": true,
+      "margin": true
+    }
+  },
+  "attributes": {
+    "isSurface": {
+      "type": "boolean",
+      "default": false
+    },
+    "contentWidth": {
+      "type": "string",
+      "default": "wide"
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "style": "file:./style.css"
+}

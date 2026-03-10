@@ -1,0 +1,36 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "hmpro/promo-grid",
+  "title": "HM Promo Grid",
+  "category": "hmpro",
+  "icon": "grid-view",
+  "description": "Premium promo grid for landing pages (hybrid render, preset-based).",
+  "supports": {
+    "align": ["wide", "full"],
+    "anchor": true
+  },
+  "attributes": {
+    "preset": { "type": "string", "default": "three_mosaic_left" },
+    "fullWidth": { "type": "boolean", "default": false },
+    "fixedHeight": { "type": "boolean", "default": false },
+    "containerMinHeight": { "type": "number", "default": 360 },
+    "containerHeight": { "type": "number", "default": 520 },
+    "gridGap": { "type": "number", "default": 20 },
+    "tileMinHeight": { "type": "number", "default": 340 },
+    "hoverEffect": { "type": "string", "default": "none" },
+    "mediaScale": { "type": "number", "default": 1 },
+    "overlayOpacity": { "type": "number", "default": 0.35 },
+    "tiles": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "object"
+      }
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "style": "file:./style.css",
+  "render": "file:./render.php"
+}

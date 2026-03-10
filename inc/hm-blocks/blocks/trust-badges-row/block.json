@@ -1,0 +1,38 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "hmpro/trust-badges-row",
+  "title": "HM Trust Badges Row",
+  "category": "hmpro",
+  "icon": "shield",
+  "description": "E-commerce trust badges row: icon + title + subtitle.",
+  "supports": {
+    "anchor": true,
+    "reusable": false
+  },
+  "attributes": {
+    "align": { "type": "string", "default": "center" },
+    "items": {
+      "type": "array",
+      "default": [
+        { "icon": "truck", "title": "Free Shipping", "text": "On orders over $49" },
+        { "icon": "shield", "title": "Secure Payment", "text": "SSL & trusted gateways" },
+        { "icon": "return", "title": "Easy Returns", "text": "30-day return policy" },
+        { "icon": "chat", "title": "Fast Support", "text": "We reply within 24h" }
+      ]
+    },
+    "columns": { "type": "number", "default": 4 },
+    "iconSize": { "type": "number", "default": 22 },
+    "titleSize": { "type": "number", "default": 14 },
+    "textSize": { "type": "number", "default": 12 },
+    "iconColor": { "type": "string", "default": "" },
+    "titleColor": { "type": "string", "default": "" },
+    "textColor": { "type": "string", "default": "" },
+    "bgColor": { "type": "string", "default": "" },
+    "borderColor": { "type": "string", "default": "" }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "style": "file:./style.css",
+  "render": "file:./render.php"
+}

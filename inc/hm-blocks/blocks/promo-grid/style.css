@@ -1,0 +1,265 @@
+.hmpro-promo-grid {
+  position: relative;
+  width: 100%;
+  min-height: var(--hm-pg-minh, 360px);
+  height: auto;
+  --hm-pg-gap: var(--hm-gap);
+  --hm-pg-overlay-opacity: 0.35;
+  --hm-pg-media-scale: 1;
+  --hm-pg-offset-x: 0px;
+  --hm-pg-offset-y: 0px;
+  --hm-pg-content-maxw: 520px;
+  --hm-pg-content-pad: 18px;
+
+  /* "Header Banner" style guarantees:
+     If theme vars are missing (editor contexts), we still stay readable. */
+  --hm-pg-text-color: var(--hm-color-bg, #ffffff);
+  --hm-pg-overlay-color: var(--hm-color-text, #000000);
+  --hm-pg-btn-bg: var(--hm-color-bg, #ffffff);
+  --hm-pg-btn-color: var(--hm-color-text, #111111);
+
+  color: var(--hm-color-text, #111111);
+}
+
+.hmpro-promo-grid.hmpro-pg--fullwidth {
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  overflow-x: clip;
+}
+
+.hmpro-pg__inner {
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.hmpro-pg__grid {
+  display: grid;
+  width: 100%;
+  height: auto;
+  grid-auto-rows: auto;
+  gap: var(--hm-pg-gap, var(--hm-gap));
+}
+
+.hmpro-pg__tile {
+  position: relative;
+  overflow: hidden;
+  display: block;
+  height: auto;
+  min-height: var(--hm-pg-tile-minh, 340px);
+  color: inherit;
+  border-radius: var(--hm-radius, 16px);
+  box-shadow: var(--hm-shadow, 0 10px 30px rgba(0,0,0,.10));
+  text-decoration: none;
+}
+
+.hmpro-pg__tile:focus,
+.hmpro-pg__tile:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+.hmpro-pg__media {
+  position: absolute;
+  inset: 0;
+}
+
+.hmpro-pg__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(var(--hm-pg-media-scale, 1));
+  transition: transform 0.35s ease, filter 0.35s ease;
+  display: block;
+}
+
+.hmpro-pg__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  /* Keep edge spacing consistent (Elementor-like).
+     The user-facing "Content padding" control is applied to the content box,
+     not the overlay container, to avoid overly aggressive edge offsets. */
+  padding: 18px;
+  box-sizing: border-box;
+  color: var(--hm-pg-text-color, #ffffff);
+  pointer-events: none;
+}
+
+.hmpro-pg__overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--hm-pg-overlay-color, #000000);
+  opacity: var(--hm-pg-overlay-opacity, 0.35);
+  transition: opacity 0.35s ease;
+}
+
+.hmpro-pg__overlay.is-disabled::before {
+  opacity: 0;
+}
+
+.hmpro-pg__content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: var(--hm-pg-content-maxw, 520px);
+  padding: var(--hm-pg-content-pad, 18px);
+  transform: translate(var(--hm-pg-offset-x, 0px), var(--hm-pg-offset-y, 0px)) scale(var(--hm-pg-content-scale, 1));
+  pointer-events: auto;
+}
+
+/* Mobile/Tablet: use mobile scale + optional Y offset */
+@media (max-width: 1024px) {
+  .hmpro-pg__content {
+    transform:
+      translate(
+        var(--hm-pg-offset-x, 0px),
+        calc(var(--hm-pg-offset-y, 0px) + var(--hm-pg-mobile-offset-y, 0px))
+      )
+      scale(var(--hm-pg-content-scale-m, var(--hm-pg-content-scale, 1)));
+  }
+}
+
+.hmpro-pg__tile-position-top-left .hmpro-pg__overlay { justify-content: flex-start; align-items: flex-start; }
+.hmpro-pg__tile-position-top-center .hmpro-pg__overlay { justify-content: center; align-items: flex-start; }
+.hmpro-pg__tile-position-top-right .hmpro-pg__overlay { justify-content: flex-end; align-items: flex-start; }
+.hmpro-pg__tile-position-center-left .hmpro-pg__overlay { justify-content: flex-start; align-items: center; }
+.hmpro-pg__tile-position-center .hmpro-pg__overlay { justify-content: center; align-items: center; }
+.hmpro-pg__tile-position-center-right .hmpro-pg__overlay { justify-content: flex-end; align-items: center; }
+.hmpro-pg__tile-position-bottom-left .hmpro-pg__overlay { justify-content: flex-start; align-items: flex-end; }
+.hmpro-pg__tile-position-bottom-center .hmpro-pg__overlay { justify-content: center; align-items: flex-end; }
+.hmpro-pg__tile-position-bottom-right .hmpro-pg__overlay { justify-content: flex-end; align-items: flex-end; }
+
+.hmpro-pg__content--top-left { justify-content: flex-start; align-items: flex-start; text-align: left; }
+.hmpro-pg__content--top-center { justify-content: flex-start; align-items: center; text-align: center; }
+.hmpro-pg__content--top-right { justify-content: flex-start; align-items: flex-end; text-align: right; }
+.hmpro-pg__content--center-left { justify-content: center; align-items: flex-start; text-align: left; }
+.hmpro-pg__content--center { justify-content: center; align-items: center; text-align: center; }
+.hmpro-pg__content--center-right { justify-content: center; align-items: flex-end; text-align: right; }
+.hmpro-pg__content--bottom-left { justify-content: flex-end; align-items: flex-start; text-align: left; }
+.hmpro-pg__content--bottom-center { justify-content: flex-end; align-items: center; text-align: center; }
+.hmpro-pg__content--bottom-right { justify-content: flex-end; align-items: flex-end; text-align: right; }
+
+.hmpro-pg__title {
+  font-size: var(--hm-pg-title-size, 22px);
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 0;
+  color: var(--hm-pg-title-color, var(--hm-pg-text-color, #ffffff));
+}
+
+.hmpro-pg__subtitle {
+  margin: 0;
+  line-height: 1.5;
+  font-size: 15px;
+  opacity: 0.95;
+  color: var(--hm-pg-subtitle-color, var(--hm-pg-text-color, #ffffff));
+}
+
+.hmpro-pg__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.2;
+  background: var(--hm-pg-btn-bg, #ffffff);
+  color: var(--hm-pg-btn-color, #111111);
+  border-radius: calc(var(--hm-radius, 16px) * 0.5);
+  text-decoration: none;
+  transition: filter 0.25s ease;
+}
+
+.hmpro-pg__button:hover {
+  text-decoration: none;
+  filter: brightness(0.98);
+}
+
+.hmpro-pg__grid--two_equal { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-areas: 'a b'; }
+.hmpro-pg__grid--two_split_70_30 { grid-template-columns: 7fr 3fr; grid-template-areas: 'a b'; }
+.hmpro-pg__grid--two_split_30_70 { grid-template-columns: 3fr 7fr; grid-template-areas: 'a b'; }
+.hmpro-pg__grid--three_equal { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-areas: 'a b c'; }
+.hmpro-pg__grid--three_mosaic_left { grid-template-columns: 2fr 1.1fr; grid-template-rows: repeat(2, minmax(0, 1fr)); grid-template-areas: 'a b' 'a c'; }
+.hmpro-pg__grid--three_mosaic_right { grid-template-columns: 1.1fr 2fr; grid-template-rows: repeat(2, minmax(0, 1fr)); grid-template-areas: 'b a' 'c a'; }
+.hmpro-pg__grid--four_checker { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr)); grid-template-areas: 'a b' 'c d'; }
+.hmpro-pg__grid--four_mosaic_left { grid-template-columns: 1.4fr 1fr; grid-template-rows: repeat(3, minmax(0, 1fr)); grid-template-areas: 'a b' 'a c' 'a d'; }
+.hmpro-pg__grid--four_mosaic_right { grid-template-columns: 1fr 1.4fr; grid-template-rows: repeat(3, minmax(0, 1fr)); grid-template-areas: 'b a' 'c a' 'd a'; }
+.hmpro-pg__grid--six_mosaic_left { grid-template-columns: 2fr 2fr 1.35fr; grid-template-rows: repeat(4, minmax(0, 1fr)); grid-template-areas: 'a a b' 'a a c' 'd d e' 'd d f'; }
+.hmpro-pg__grid--six_mosaic_right { grid-template-columns: 1.35fr 2fr 2fr; grid-template-rows: repeat(4, minmax(0, 1fr)); grid-template-areas: 'b a a' 'c a a' 'e d d' 'f d d'; }
+.hmpro-pg__grid--six_grid { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr)); grid-template-areas: 'a b c' 'd e f'; }
+
+.hmpro-pg__tile--a { grid-area: a; }
+.hmpro-pg__tile--b { grid-area: b; }
+.hmpro-pg__tile--c { grid-area: c; }
+.hmpro-pg__tile--d { grid-area: d; }
+.hmpro-pg__tile--e { grid-area: e; }
+.hmpro-pg__tile--f { grid-area: f; }
+
+.hmpro-promo-grid.hmpro-pg--hover-zoom .hmpro-pg__tile:hover .hmpro-pg__media img {
+  transform: scale(calc(var(--hm-pg-media-scale, 1) * 1.08));
+}
+
+.hmpro-promo-grid.hmpro-pg--hover-dim .hmpro-pg__tile:hover .hmpro-pg__overlay::before {
+  opacity: calc(var(--hm-pg-overlay-opacity, 0.35) + 0.15);
+}
+
+.hmpro-promo-grid.hmpro-pg--fixed-height {
+  min-height: 0;
+}
+.hmpro-promo-grid.hmpro-pg--fixed-height .hmpro-pg__grid,
+.hmpro-promo-grid.hmpro-pg--fixed-height .hmpro-pg__tile {
+  height: 100%;
+}
+.hmpro-promo-grid.hmpro-pg--fixed-height .hmpro-pg__tile {
+  min-height: 0;
+}
+.hmpro-promo-grid.hmpro-pg--fixed-height .hmpro-pg__grid {
+  grid-auto-rows: minmax(0, 1fr);
+}
+
+@media (max-width: 1024px) {
+  .hmpro-promo-grid .hmpro-pg__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas: none;
+    grid-template-rows: auto;
+  }
+  .hmpro-promo-grid .hmpro-pg__tile {
+    grid-area: auto !important;
+  }
+  .hmpro-promo-grid.hmpro-pg--fixed-height .hmpro-pg__grid {
+    grid-template-rows: auto;
+    grid-auto-rows: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .hmpro-promo-grid .hmpro-pg__grid {
+    grid-template-columns: 1fr !important;
+    grid-template-areas: none !important;
+    grid-auto-rows: auto;
+  }
+  .hmpro-promo-grid .hmpro-pg__tile {
+    min-height: 220px;
+    grid-area: auto !important;
+  }
+  .hmpro-promo-grid.hmpro-pg--fixed-height {
+    height: auto;
+  }
+  .hmpro-promo-grid.hmpro-pg--fixed-height .hmpro-pg__inner,
+  .hmpro-promo-grid.hmpro-pg--fixed-height .hmpro-pg__grid {
+    height: auto;
+  }
+  .hmpro-promo-grid.hmpro-pg--fixed-height .hmpro-pg__grid {
+    grid-template-rows: auto;
+    grid-auto-rows: auto;
+  }
+}

@@ -1,0 +1,17 @@
+.hmpro-section {
+  position: relative;
+}
+
+.hmpro-section__inner {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hmpro-section__inner.is-narrow {
+  max-width: 900px;
+}
+
+.hmpro-section__inner.is-wide {
+  max-width: 1200px;
+}
