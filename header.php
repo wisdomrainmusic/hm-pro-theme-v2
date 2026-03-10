@@ -76,12 +76,25 @@ if ( class_exists( 'WooCommerce' ) ) {
 		( function_exists( 'is_account_page' ) && is_account_page() );
 }
 
-$hmpro_mobile_account_links = [
-	[ 'label' => 'Login', 'url' => home_url( '/login' ) ],
-	[ 'label' => 'Register', 'url' => home_url( '/register' ) ],
-	[ 'label' => 'Account', 'url' => home_url( '/account' ) ],
-	[ 'label' => 'Logout', 'url' => home_url( '/logout' ) ],
-];
+/*
+ * Determine login state (Ultimate Member / WordPress)
+ */
+$hmpro_is_logged_in = is_user_logged_in();
+
+/*
+ * Mobile account menu links
+ */
+if ( $hmpro_is_logged_in ) {
+	$hmpro_mobile_account_links = [
+		[ 'label' => __( 'Account', 'hm-pro-theme' ), 'url' => home_url( '/account' ) ],
+		[ 'label' => __( 'Logout', 'hm-pro-theme' ), 'url' => home_url( '/logout' ) ],
+	];
+} else {
+	$hmpro_mobile_account_links = [
+		[ 'label' => __( 'Login', 'hm-pro-theme' ), 'url' => home_url( '/login' ) ],
+		[ 'label' => __( 'Register', 'hm-pro-theme' ), 'url' => home_url( '/register' ) ],
+	];
+}
 ?>
 
 <?php
@@ -172,17 +185,7 @@ function hmpro_icon_close() {
 						<?php foreach ( $hmpro_mobile_account_links as $hmpro_link ) : ?>
 							<a class="hmpro-mobile-account-menu__item" href="<?php echo esc_url( $hmpro_link['url'] ); ?>">
 								<span class="hmpro-mobile-account-menu__label"><?php echo esc_html( $hmpro_link['label'] ); ?></span>
-								<span class="hmpro-mobile-account-menu__value">
-									<?php
-									echo esc_html(
-										sprintf(
-											/* translators: %s: account menu label */
-											__( 'UM %s', 'hm-pro-theme' ),
-											$hmpro_link['label']
-										)
-									);
-									?>
-								</span>
+								<span class="hmpro-mobile-account-menu__arrow" aria-hidden="true"></span>
 							</a>
 						<?php endforeach; ?>
 					</div>

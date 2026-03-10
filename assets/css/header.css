@@ -669,26 +669,15 @@
 	color:#0f172a;
 }
 
-.hmpro-mobile-account-menu__value{
-	display:inline-flex;
-	align-items:center;
-	gap:12px;
-	font-size:16px;
-	line-height:1.35;
-	font-weight:500;
-	color:#64748b;
-	white-space:nowrap;
-}
-
-.hmpro-mobile-account-menu__value::after{
-	content:"";
+.hmpro-mobile-account-menu__arrow{
 	display:inline-block;
 	width:0;
 	height:0;
 	border-top:8px solid transparent;
 	border-bottom:8px solid transparent;
-	border-left:10px solid currentColor;
-	opacity:.75;
+	border-left:10px solid #94a3b8;
+	opacity:.9;
+	flex:0 0 auto;
 }
 
 .hmpro-mobile-nav{
