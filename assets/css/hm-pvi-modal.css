@@ -1,0 +1,109 @@
+.hm-pvi-modal {
+	position: fixed;
+	inset: 0;
+	z-index: 1000005;
+	display: none;
+	align-items: center;
+	justify-content: center;
+	padding: 20px;
+}
+
+.hm-pvi-modal.is-open {
+	display: flex;
+}
+
+.hm-pvi-modal__backdrop {
+	position: absolute;
+	inset: 0;
+	background: rgba(0, 0, 0, 0.85);
+}
+
+.hm-pvi-modal__dialog {
+	position: relative;
+	width: min(95vw, 1120px);
+	max-height: calc(100vh - 32px);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 1;
+}
+
+.hm-pvi-modal__content {
+	position: relative;
+	width: 100%;
+	aspect-ratio: 16 / 9;
+	background: #000;
+	border-radius: 10px;
+	overflow: hidden;
+}
+
+.hm-pvi-modal.hm-pvi-modal--portrait .hm-pvi-modal__dialog {
+	width: min(62vw, 480px);
+}
+
+.hm-pvi-modal.hm-pvi-modal--portrait .hm-pvi-modal__content {
+	aspect-ratio: 9 / 16;
+}
+
+.hm-pvi-modal__video,
+.hm-pvi-modal__video iframe,
+.hm-pvi-modal__video video {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	border: 0;
+	object-fit: contain;
+	background: #000;
+}
+
+.hm-pvi-modal__close {
+	position: absolute;
+	top: max(10px, env(safe-area-inset-top));
+	right: max(10px, env(safe-area-inset-right));
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 44px;
+	height: 44px;
+	border: 0;
+	border-radius: 999px;
+	background: rgba(0, 0, 0, 0.72);
+	color: #fff;
+	font-size: 24px;
+	line-height: 1;
+	cursor: pointer;
+	z-index: 2;
+}
+
+body.hm-pvi-modal-open {
+	overflow: hidden;
+}
+
+@media (max-width: 767px) {
+	.hm-pvi-modal {
+		padding: 12px;
+	}
+
+	.hm-pvi-modal__dialog,
+	.hm-pvi-modal.hm-pvi-modal--portrait .hm-pvi-modal__dialog {
+		width: min(100vw - 24px, 96vh);
+	}
+
+	.hm-pvi-modal__dialog {
+		max-height: calc(100vh - 24px - env(safe-area-inset-bottom));
+	}
+
+	/* Portrait: keep aspect-ratio box and center it */
+	.hm-pvi-modal.hm-pvi-modal--portrait .hm-pvi-modal__dialog {
+		height: auto !important;
+		max-height: calc(100vh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom)) !important;
+		width: min(92vw, calc((100vh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom)) * 9 / 16)) !important;
+	}
+
+	.hm-pvi-modal.hm-pvi-modal--portrait .hm-pvi-modal__content {
+		width: 100% !important;
+		max-height: calc(100vh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom)) !important;
+		aspect-ratio: 9 / 16 !important;
+	}
+}

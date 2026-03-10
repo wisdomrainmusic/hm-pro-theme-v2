@@ -1,0 +1,8 @@
+.woocommerce-product-gallery.hmpro-vg-lock {
+	transition: opacity .12s ease;
+	opacity: .98;
+}
+.woocommerce-product-gallery.hmpro-vg-lock .woocommerce-product-gallery__wrapper {
+	transition: opacity .12s ease;
+	opacity: .98;
+}

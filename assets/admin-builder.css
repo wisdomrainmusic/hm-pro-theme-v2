@@ -1,0 +1,364 @@
+.hmpro-builder-layout{
+	display:flex;
+	gap:16px;
+	margin-top:16px;
+	align-items:stretch;
+	/* allow wrapping if needed instead of spilling outside viewport */
+	flex-wrap:nowrap;
+}
+
+/* CRITICAL: allow flex children to shrink inside WP admin viewport */
+.hmpro-builder-panel{ min-width:0; }
+.hmpro-builder-canvas{ min-width:0; overflow-x:auto; overflow-y:visible; }
+.hmpro-builder-panel{
+	background:#fff;
+	border:1px solid #e2e2e2;
+	border-radius:10px;
+	padding:16px;
+	box-sizing:border-box;
+}
+.hmpro-builder-sections{width:260px;}
+.hmpro-builder-elements{width:260px;}
+.hmpro-builder-canvas{flex:1; min-height:520px;}
+
+.hmpro-builder-list,
+.hmpro-canvas-list{
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+.hmpro-builder-list li{
+	margin:0 0 10px 0;
+}
+.hmpro-builder-list .button{
+	width:100%;
+	padding:10px 12px;
+	border-radius:8px;
+	text-align:left;
+}
+
+.hmpro-builder-canvas-head{
+	display:flex;
+	align-items:center;
+	gap:12px;
+	border-bottom:1px solid #eee;
+	padding-bottom:10px;
+	margin-bottom:12px;
+}
+.hmpro-builder-canvas-title{
+	margin:0;
+	font-size:14px;
+}
+.hmpro-builder-canvas-meta{
+	display:flex;
+	align-items:center;
+	gap:12px;
+	margin-left:auto;
+}
+.hmpro-builder-editing{
+	color:#666;
+	font-size:12px;
+}
+.hmpro-zone-hint{
+	color:#777;
+	font-size:12px;
+}
+
+.hmpro-zones{
+	display:grid;
+	grid-template-columns:repeat(3, minmax(0, 1fr));
+	gap:12px;
+}
+.hmpro-zones.hmpro-zones-4{
+	display:grid;
+	grid-template-columns:repeat(4, minmax(0, 1fr));
+	gap:12px;
+}
+
+@media (max-width: 1100px){
+	.hmpro-zones.hmpro-zones-4{
+		grid-template-columns: 1fr 1fr;
+	}
+}
+
+@media (max-width: 720px){
+	.hmpro-zones.hmpro-zones-4{
+		grid-template-columns: 1fr;
+	}
+}
+.hmpro-zone{
+	border:2px dashed #d7d7d7;
+	border-radius:10px;
+	background:#fafafa;
+	min-height:380px;
+	display:flex;
+	flex-direction:column;
+}
+.hmpro-zone-title{
+	padding:10px 12px;
+	border-bottom:1px solid #e9e9e9;
+	font-weight:600;
+	background:#fff;
+	border-top-left-radius:8px;
+	border-top-right-radius:8px;
+
+	/* prevent long titles from forcing overflow */
+	white-space:nowrap;
+	overflow:hidden;
+	text-overflow:ellipsis;
+}
+
+@media (max-width: 1400px){
+	.hmpro-builder-sections{width:220px;}
+	.hmpro-builder-elements{width:220px;}
+}
+
+@media (max-width: 1250px){
+	.hmpro-builder-sections{width:200px;}
+	.hmpro-builder-elements{width:200px;}
+}
+.hmpro-canvas-list{
+	padding:12px;
+	margin:0;
+	min-height:320px;
+}
+.hmpro-zone.is-over{
+	border-color:#2271b1;
+	background:#f1f7ff;
+}
+.hmpro-canvas-list .hmpro-empty{
+	text-align:center;
+	color:#777;
+	padding:20px 0;
+}
+
+.hmpro-canvas-item{
+	background:#fff;
+	border:1px solid #e6e6e6;
+	border-radius:10px;
+	padding:12px;
+	margin:0 0 10px 0;
+	display:flex;
+	align-items:center;
+	justify-content:space-between;
+	gap:12px;
+}
+.hmpro-canvas-item.is-dragging{
+	opacity:.6;
+}
+.hmpro-label{
+	display:flex;
+	align-items:center;
+	gap:10px;
+	min-width:0;
+}
+.hmpro-pill{
+	display:inline-flex;
+	align-items:center;
+	justify-content:center;
+	min-width:56px;
+	padding:6px 10px;
+	border:1px solid #e2e2e2;
+	border-radius:999px;
+	font-size:12px;
+	background:#fbfbfb;
+}
+.hmpro-titlewrap{
+	display:flex;
+	flex-direction:column;
+	gap:2px;
+	min-width:0;
+}
+.hmpro-titlewrap strong{
+	white-space:nowrap;
+	overflow:hidden;
+	text-overflow:ellipsis;
+}
+.hmpro-canvas-item .hmpro-meta{
+	color:#777;
+	font-size:12px;
+}
+.hmpro-canvas-item .hmpro-actions{
+	display:flex;
+	gap:8px;
+}
+.hmpro-canvas-item .button{
+	border-radius:8px;
+}
+
+/* Modal */
+.hmpro-modal{display:none;}
+.hmpro-modal.is-open{display:block;}
+.hmpro-modal__overlay{
+	position:fixed;
+	left:0; top:0; right:0; bottom:0;
+	background:rgba(0,0,0,.35);
+	z-index:100000;
+}
+.hmpro-modal__panel{
+	position:fixed;
+	left:50%; top:50%;
+	transform:translate(-50%,-50%);
+	background:#fff;
+	border-radius:12px;
+	width:min(520px, calc(100vw - 32px));
+	z-index:100001;
+	border:1px solid #e6e6e6;
+	box-shadow:0 10px 40px rgba(0,0,0,.18);
+}
+.hmpro-modal__head{
+	display:flex;
+	align-items:center;
+	justify-content:space-between;
+	padding:12px 14px;
+	border-bottom:1px solid #eee;
+}
+.hmpro-modal__body{
+	padding:14px;
+}
+.hmpro-modal__foot{
+	display:flex;
+	justify-content:flex-end;
+	gap:10px;
+	padding:12px 14px;
+	border-top:1px solid #eee;
+}
+.hmpro-field{
+	margin:0 0 12px 0;
+}
+.hmpro-field label{
+	display:block;
+	font-weight:600;
+	margin:0 0 6px 0;
+}
+.hmpro-field select,
+.hmpro-field input[type="text"],
+.hmpro-field input[type="url"],
+.hmpro-field textarea{
+	width:100%;
+}
+
+@media (max-width: 980px){
+	.hmpro-zones{grid-template-columns:1fr;}
+	.hmpro-builder-layout{flex-direction:column;}
+	.hmpro-builder-sections{width:100%;}
+	.hmpro-builder-elements{width:100%;}
+}
+.hmpro-pill{
+	display:none !important;
+}
+
+.hmpro-label{
+	display:flex;
+	align-items:center;
+	gap:10px;
+}
+
+.hmpro-titlewrap{
+	flex:1 1 auto;
+	min-width:0;
+}
+
+.hmpro-actions{
+	margin-left:auto;
+	display:flex;
+	align-items:center;
+	gap:6px;
+}
+
+.hmpro-actions button{
+	width:32px;
+	height:32px;
+	padding:0;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+}
+
+.hmpro-canvas-item{
+	padding:10px 12px;
+}
+
+/* =========================================================
+   Admin builder polish (safe)
+   - hide component type/title/meta inside cards
+   - keep only action buttons visible
+   - make modal always fit viewport
+   ========================================================= */
+
+/* Hide component type pill + title text + internal id */
+.hmpro-pill,
+.hmpro-titlewrap strong,
+.hmpro-meta{
+	display:none !important;
+}
+
+/* Show real component name on cards (admin UI only) */
+.hmpro-label::before{
+	content: attr(data-label);
+	font-size:12px;
+	opacity:.55;
+}
+
+/* If data-label is missing for any reason, keep cards readable */
+.hmpro-label:not([data-label])::before{ content:"Item"; }
+
+/* Ensure actions always sit nicely to the right */
+.hmpro-label{
+	display:flex;
+	align-items:center;
+	gap:10px;
+}
+.hmpro-actions{
+	margin-left:auto;
+	display:flex;
+	align-items:center;
+	gap:6px;
+}
+
+/* --- Modal: fit to viewport --- */
+.hmpro-modal__panel{
+	max-height: calc(100vh - 32px);
+	overflow: hidden;
+}
+
+.hmpro-modal__body{
+	max-height: calc(100vh - 32px - 52px - 56px);
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
+}
+/* =========================================================
+   Modal footer always visible (Save/Cancel)
+   ========================================================= */
+
+.hmpro-modal__panel{
+	display:flex;
+	flex-direction:column;
+	max-height: calc(100vh - 24px);
+	overflow:hidden;
+}
+
+/* Make header fixed height */
+.hmpro-modal__head{
+	flex:0 0 auto;
+}
+
+/* Body scrolls */
+.hmpro-modal__body{
+	flex:1 1 auto;
+	min-height:0; /* IMPORTANT: allows flex child to scroll */
+	overflow:auto;
+	-webkit-overflow-scrolling:touch;
+	padding-bottom:16px;
+}
+
+/* Footer stays visible */
+.hmpro-modal__foot{
+	flex:0 0 auto;
+	position:sticky;
+	bottom:0;
+	background:#fff;
+	border-top:1px solid rgba(0,0,0,.08);
+	padding:12px 16px;
+	z-index:5;
+}

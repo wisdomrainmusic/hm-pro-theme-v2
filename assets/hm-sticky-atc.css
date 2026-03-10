@@ -1,0 +1,81 @@
+.hmpro-sticky-atc{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  z-index:9999;
+  transform:translateY(110%);
+  opacity:0;
+  transition:transform .25s ease,opacity .25s ease;
+  pointer-events:none;
+}
+
+.hmpro-sticky-atc.is-visible{
+  transform:translateY(0);
+  opacity:1;
+  pointer-events:auto;
+}
+
+.hmpro-sticky-atc__inner{
+  max-width:1200px;
+  margin:0 auto;
+  padding:10px 14px;
+  display:flex;
+  gap:12px;
+  align-items:center;
+  justify-content:space-between;
+  background:rgba(255,255,255,.96);
+  border-top:1px solid rgba(0,0,0,.08);
+  backdrop-filter:saturate(140%) blur(10px);
+}
+
+.hmpro-sticky-atc__left{display:flex;gap:10px;align-items:center;min-width:0;}
+
+.hmpro-sticky-atc__thumb{width:44px;height:44px;border-radius:10px;object-fit:cover;flex:0 0 auto;}
+
+.hmpro-sticky-atc__meta{min-width:0;}
+
+.hmpro-sticky-atc__title{font-size:13px;font-weight:700;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:48vw;}
+
+.hmpro-sticky-atc__price{font-size:13px;opacity:.85;line-height:1.2;}
+
+.hmpro-sticky-atc__note{font-size:12px;opacity:.75;line-height:1.2;margin-top:2px;}
+
+.hmpro-sticky-atc__btn{
+  appearance:none;
+  border:0;
+  border-radius:12px;
+  padding:10px 14px;
+  font-weight:700;
+  cursor:pointer;
+  background:#111;
+  color:#fff;
+  white-space:nowrap;
+}
+
+.hmpro-sticky-atc__btn:disabled{opacity:.6;cursor:not-allowed;}
+
+/* Desktop: keep hidden by default (mobile-first). */
+@media (min-width: 992px){
+  .hmpro-sticky-atc{display:none;}
+}
+
+/* Small screens */
+@media (max-width: 420px){
+  .hmpro-sticky-atc__title{max-width:44vw;}
+  .hmpro-sticky-atc__btn{padding:10px 12px;}
+}
+
+
+.hmpro-sticky-atc__actions{display:flex;gap:10px;align-items:center;}
+.hmpro-sticky-atc__wa{--hmpro-social-icon-size:40px;--hmpro-social-icon-svg-size:18px;--hmpro-social-icon-radius:14px;}
+.hmpro-sticky-atc__wa{color:#fff;background:linear-gradient(180deg,#2AE06D 0%,#1FB855 100%);border-color:rgba(0,0,0,0.10);box-shadow:0 10px 24px rgba(0,0,0,0.12);} 
+.hmpro-sticky-atc__wa:hover,.hmpro-sticky-atc__wa:focus{opacity:.95;transform:translateY(-1px);} 
+
+/* Hide floating WhatsApp (Click to Chat) on product pages; we provide a compact action in the sticky bar instead. */
+body.single-product #ht-ctc-chat,
+body.single-product .ht-ctc-chat,
+body.single-product .ccw_plugin,
+body.single-product .click-to-chat,
+body.single-product .ctc_chat,
+body.single-product .joinchat{display:none !important;}

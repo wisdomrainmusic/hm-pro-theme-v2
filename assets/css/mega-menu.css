@@ -1,0 +1,868 @@
+/* ==============================
+   Mega Menu v2 Canvas (frontend)
+   Deterministic 4-column grid
+   ============================== */
+
+/* Make the dropdown panel viewport-wide and independent from layout containers */
+
+/* Ensure the top-level <li> can anchor the mega panel */
+.hmpro-primary-nav li.hmpro-li-has-mega{
+	position: relative !important;
+}
+
+/* Prevent header/nav containers from clipping the full-width panel */
+.hmpro-primary-nav{
+	overflow: visible !important;
+}
+
+.hmpro-primary-nav li.hmpro-li-has-mega > .hmpro-mega-panel{
+	display: none;
+	position: absolute !important;
+	left: 50% !important;
+	top: 100% !important;
+	transform: translateX(-50%) !important;
+	width: 100vw !important;
+	z-index: 999999;
+	box-sizing: border-box;
+	background: var(--hmpro-mega-bg-color, #fff);
+	border-top: 1px solid rgba(0,0,0,0.08);
+	box-shadow: 0 18px 40px rgba(0,0,0,0.14);
+	overflow-x: hidden;
+}
+
+/* Link color inside mega panel only */
+.hmpro-primary-nav li.hmpro-li-has-mega > .hmpro-mega-panel a{
+	color: var(--hmpro-mega-link-color, inherit);
+}
+
+/* Show on hover/focus (keep your existing JS/CSS behavior; this is a safe fallback) */
+.hmpro-primary-nav li.hmpro-li-has-mega:hover > .hmpro-mega-panel,
+.hmpro-primary-nav li.hmpro-li-has-mega:focus-within > .hmpro-mega-panel{
+	display: block;
+}
+
+/* Inner wrapper: controlled width (not hero-wide, but much wider than before) */
+.hmpro-primary-nav li.hmpro-li-has-mega > .hmpro-mega-panel .hmpro-mega-layout{
+	max-width: 1560px;
+	margin: 0 auto;
+	padding: 34px 56px;
+	box-sizing: border-box;
+}
+
+@media (max-width: 1024px){
+	.hmpro-primary-nav li.hmpro-li-has-mega > .hmpro-mega-panel .hmpro-mega-layout{
+		max-width: 100%;
+		padding: 22px 18px;
+	}
+}
+
+/* Keep the canvas deterministic */
+.hmpro-primary-nav .hmpro-mega-panel .hmpro-mega-canvas{
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: 18px;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+@media (max-width: 1024px){
+	.hmpro-primary-nav .hmpro-mega-panel .hmpro-mega-canvas{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
+@media (max-width: 640px){
+	.hmpro-primary-nav .hmpro-mega-panel .hmpro-mega-canvas{ grid-template-columns: 1fr; }
+}
+
+.hmpro-primary-nav {
+	position: static; /* IMPORTANT: remove width constraint for mega panel */
+}
+
+.hmpro-primary-nav .hmpro-mega-panel .hmpro-mega-canvas {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: 18px;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.hmpro-primary-nav .hmpro-mega-panel .hmpro-mega-canvas .hmpro-mega-col {
+	min-width: 0;
+}
+
+.hmpro-primary-nav .hmpro-mega-panel .hmpro-mega-widget {
+	margin: 0 0 14px 0;
+}
+
+@media (max-width: 1024px) {
+	.hmpro-primary-nav .hmpro-mega-panel .hmpro-mega-canvas {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@media (max-width: 640px) {
+	.hmpro-primary-nav .hmpro-mega-panel .hmpro-mega-canvas {
+		grid-template-columns: 1fr;
+	}
+}
+/* =========================================================
+   Mega Menu – Final Column Layout (Excel-style)
+   Scope: ONLY mega menu
+   ========================================================= */
+
+/* Full-width anchor (nav is reference) */
+.hmpro-primary-nav li.hmpro-li-has-mega > .hmpro-mega-panel{
+	left: 0;
+	right: 0;
+	width: 100%;
+}
+
+/* Wide & breathable inner container */
+.hmpro-primary-nav .hmpro-mega-layout{
+	max-width: 1560px;
+	margin: 0 auto;
+	padding: 36px 56px;
+}
+
+/* 🔑 Core layout: column-based (NOT grid) */
+.hmpro-context-mega .hmpro-builder-row{
+	display: flex;
+	flex-wrap: nowrap;          /* no row-based wrapping */
+	gap: 64px;                  /* column spacing */
+	align-items: flex-start;    /* titles always aligned */
+}
+
+/* Each builder column = one Excel column */
+.hmpro-context-mega .hmpro-builder-col{
+	flex: 0 0 auto;
+	width: 240px;
+	max-width: 240px;
+}
+
+/* Column title */
+.hmpro-mega-root-title{
+	font-weight: 600;
+	margin-bottom: 10px;
+	line-height: 1.3;
+}
+
+/* List cleanup */
+.hmpro-mega-col-list{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+.hmpro-mega-col-list li{
+	margin-bottom: 6px;
+}
+
+/* Tablet: allow wrapping into 2 columns */
+@media (max-width: 1100px){
+	.hmpro-context-mega .hmpro-builder-row{
+		flex-wrap: wrap;
+	}
+	.hmpro-context-mega .hmpro-builder-col{
+		width: 45%;
+		max-width: 45%;
+	}
+}
+
+/* Mobile: single column */
+@media (max-width: 640px){
+	.hmpro-primary-nav .hmpro-mega-layout{
+		padding: 22px 18px;
+	}
+	.hmpro-context-mega .hmpro-builder-col{
+		width: 100%;
+		max-width: 100%;
+	}
+}
+
+/* Mega panel lists must remain vertical (avoid "crab" horizontal stacking) */
+.hmpro-context-mega .hmpro-mega-panel li,
+.hmpro-context-mega .hmpro-mega-col-list li {
+	display: block;
+}
+
+/* ---------------------------------------------------------
+   Mega panel positioning + preventing normal dropdown overlap
+   --------------------------------------------------------- */
+
+/* --- Mega Menu positioning: anchor to header, not to nav --- */
+
+/* IMPORTANT: mega li must not be the positioned ancestor */
+.hmpro-primary-nav li.hmpro-li-has-mega {
+	position: static;
+}
+
+/* When mega is bound, do NOT show the normal submenu */
+.hmpro-primary-nav li.hmpro-li-has-mega:hover > ul.sub-menu {
+	display: none !important;
+}
+
+/* Full-width mega panel: position relative to header (not to nav, not to <li>) */
+.hmpro-primary-nav li.hmpro-li-has-mega > .hmpro-mega-panel {
+	left: 0;
+	right: 0;
+	box-sizing: border-box;
+	width: auto;
+	max-width: none;
+	transform: none;
+	overflow-x: hidden;
+}
+
+/* Mega Menu (Commit 3D) */
+.hmpro-has-mega {
+	position: relative;
+}
+
+/* Most WP menu structures: .menu > li is relative; ensure panel can anchor */
+.main-navigation li,
+.primary-navigation li,
+.menu li {
+	position: relative;
+}
+
+/* IMPORTANT:
+   Keep mega panel rules scoped under primary nav so it won't override
+   our hmpro-li-has-mega positioning above. */
+
+/* =========================================================
+   Mega Menu - Optional Click Mode
+   Default hover behavior remains unchanged unless
+   body.hmpro-mega-click is present.
+   ========================================================= */
+
+body.hmpro-mega-click li.hmpro-li-has-mega:hover .hmpro-mega-panel,
+body.hmpro-mega-click li.hmpro-li-has-mega:hover .hmpro-mega-dropdown,
+body.hmpro-mega-click li.hmpro-li-has-mega:hover .hmpro-mega-wrap {
+	/* Disable hover-open in click mode (selectors may vary by theme) */
+	opacity: 0;
+	visibility: hidden;
+	pointer-events: none;
+}
+
+body.hmpro-mega-click li.hmpro-li-has-mega.hmpro-mega-open .hmpro-mega-panel,
+body.hmpro-mega-click li.hmpro-li-has-mega.hmpro-mega-open .hmpro-mega-dropdown,
+body.hmpro-mega-click li.hmpro-li-has-mega.hmpro-mega-open .hmpro-mega-wrap {
+	opacity: 1;
+	visibility: visible;
+	pointer-events: auto;
+}
+
+/* Keep top-level links clickable even if mega panel overlaps */
+body.hmpro-mega-click li.hmpro-li-has-mega > a {
+	position: relative;
+	z-index: 5;
+}
+
+/* Mega panel stays below link layer but above header background */
+body.hmpro-mega-click .hmpro-mega-panel,
+body.hmpro-mega-click .hmpro-mega-dropdown,
+body.hmpro-mega-click .hmpro-mega-wrap {
+	z-index: 4;
+}
+.hmpro-primary-nav .hmpro-mega-panel {
+	display: none;
+	position: absolute; /* now anchored to #site-header */
+	left: 0;
+	right: 0;
+	top: 100%;
+	width: auto;
+	max-width: none;
+	z-index: 9999;
+	background: var(--hmpro-mega-bg-color, #fff);
+	border-top: 1px solid rgba(0, 0, 0, 0.08);
+	box-shadow: 0 18px 40px rgba(0, 0, 0, 0.14);
+	transform: none;
+	overflow-x: hidden;
+}
+
+/* Ensure customizer Mega Menu colors apply even when markup nests the panel
+   (e.g. panel inside .hmpro-mega-wrap / .hmpro-mega-dropdown). */
+.hmpro-primary-nav .hmpro-mega-wrap,
+.hmpro-primary-nav .hmpro-mega-dropdown,
+.hmpro-primary-nav .hmpro-mega-panel{
+	background: var(--hmpro-mega-bg-color, #fff);
+}
+
+.hmpro-primary-nav .hmpro-mega-wrap a,
+.hmpro-primary-nav .hmpro-mega-dropdown a,
+.hmpro-primary-nav .hmpro-mega-panel a{
+	color: var(--hmpro-mega-link-color, inherit);
+}
+
+/* Reveal on hover (desktop default) */
+.menu > li:hover > .hmpro-mega-panel,
+.primary-navigation > li:hover > .hmpro-mega-panel,
+.main-navigation > li:hover > .hmpro-mega-panel {
+	display: block;
+}
+
+/* Also reveal when our class is present */
+.hmpro-primary-nav li.hmpro-li-has-mega:hover > .hmpro-mega-panel {
+	display: block;
+}
+
+/* Optional: height variants */
+.hmpro-mega-panel.hmpro-mega-height-compact {
+	padding: 18px 0;
+}
+.hmpro-mega-panel.hmpro-mega-height-showcase {
+	padding: 26px 0;
+}
+
+/* Layout inner wrapper */
+.hmpro-primary-nav li.hmpro-li-has-mega > .hmpro-mega-panel .hmpro-mega-layout {
+	/* Wider canvas area (Excel-style) */
+	max-width: 1560px;
+	margin: 0 auto;
+	padding: 36px 56px;
+}
+
+@media (max-width: 1024px) {
+	.hmpro-primary-nav li.hmpro-li-has-mega > .hmpro-mega-panel .hmpro-mega-layout {
+		padding: 22px 18px;
+	}
+}
+
+/* Secondary menu row inside mega panel */
+.hmpro-mega-secondary {
+	margin-top: 16px;
+	padding-top: 14px;
+	border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+.hmpro-mega-secondary ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 14px;
+}
+.hmpro-mega-secondary li {
+	margin: 0;
+	padding: 0;
+}
+.hmpro-mega-secondary a {
+	text-decoration: none;
+}
+.hmpro-mega-secondary a:hover {
+	text-decoration: underline;
+}
+
+.hmpro-context-mega .hmpro-builder-row {
+	display: flex;
+	gap: 18px;
+	align-items: flex-start;
+	flex-wrap: wrap; /* 4th column never disappears; wrap instead */
+}
+.hmpro-context-mega .hmpro-builder-col {
+	flex: 1 1 260px; /* 4 cols on wide screens, wraps on medium */
+	min-width: 0;
+	flex-direction: column;
+	align-items: flex-start;
+	max-width: 100%;
+}
+
+.hmpro-mega-column-menu .hmpro-mega-root-title {
+	font-weight: 700;
+	margin: 0 0 10px;
+	line-height: 1.2;
+}
+.hmpro-mega-col-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+.hmpro-mega-col-item {
+	margin: 0;
+	padding: 0;
+}
+.hmpro-mega-col-item + .hmpro-mega-col-item {
+	margin-top: 6px;
+}
+.hmpro-mega-col-link {
+	display: inline-block;
+	padding: 4px 0;
+	text-decoration: none;
+	color: inherit;
+	line-height: 1.35;
+}
+.hmpro-mega-col-link:hover {
+	text-decoration: underline;
+}
+
+.hmpro-mega-col-more-link {
+	font-weight: 600;
+}
+
+.hmpro-mega-image {
+	width: 100%;
+	overflow: hidden;
+	border-radius: 10px;
+}
+
+.hmpro-mega-image-square,
+.hmpro-mega-image.is-square {
+	aspect-ratio: 1 / 1;
+}
+
+.hmpro-mega-image-landscape,
+.hmpro-mega-image.is-landscape {
+	aspect-ratio: 4 / 3;
+}
+
+.hmpro-mega-image-portrait,
+.hmpro-mega-image.is-portrait {
+	aspect-ratio: 3 / 4;
+}
+
+.hmpro-mega-image-media,
+.hmpro-mega-img {
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+
+.hmpro-mega-image-fit-cover .hmpro-mega-image-media,
+.hmpro-mega-image.fit-cover .hmpro-mega-img {
+	object-fit: cover;
+}
+
+.hmpro-mega-image-fit-contain .hmpro-mega-image-media,
+.hmpro-mega-image.fit-contain .hmpro-mega-img {
+	object-fit: contain;
+	background: #fff;
+}
+
+.hmpro-mega-image img {
+	max-width: 100%;
+}
+
+/* =========================================================
+   Mega Menu – Final Override (Viewport Wide)
+   Keeps the panel centered in the viewport without clipping
+   ========================================================= */
+
+.hmpro-primary-nav{
+	position: relative;
+}
+
+/* ==============================
+   Mega Column Menu - Compact List
+   ============================== */
+
+.hmpro-mega-column-menu {
+	width: 100%;
+}
+
+.hmpro-mega-root-title {
+	margin: 0 0 10px 0;
+	font-weight: 700;
+	line-height: 1.2;
+}
+
+.hmpro-mega-col-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.hmpro-mega-col-item {
+	margin: 0;
+	padding: 0;
+}
+
+.hmpro-mega-col-link {
+	display: block;
+	padding: 6px 0;
+	line-height: 1.25;
+	text-decoration: none;
+}
+
+.hmpro-mega-col-link:hover {
+	text-decoration: underline;
+}
+
+.hmpro-depth-2 .hmpro-mega-col-link {
+	padding: 4px 0;
+	opacity: 0.92;
+}
+
+.hmpro-depth-3 .hmpro-mega-col-link {
+	padding: 3px 0;
+	opacity: 0.85;
+}
+
+.hmpro-mega-more {
+	margin-top: 6px;
+}
+
+.hmpro-mega-more-link {
+	font-weight: 700;
+}
+
+/* ==============================
+   Mega Image - Consistent Sizing
+   ============================== */
+
+.hmpro-mega-image {
+	width: 100%;
+	overflow: hidden;
+	border-radius: 12px;
+}
+
+.hmpro-mega-image .hmpro-mega-img,
+.hmpro-mega-image img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.hmpro-mega-image.fit-contain .hmpro-mega-img,
+.hmpro-mega-image.fit-contain img {
+	object-fit: contain;
+}
+
+.hmpro-mega-image.is-landscape {
+	aspect-ratio: 16 / 9;
+}
+
+.hmpro-mega-image.is-square {
+	aspect-ratio: 1 / 1;
+}
+
+.hmpro-mega-image.is-portrait {
+	aspect-ratio: 3 / 4;
+}
+
+/* Ensure the mega <li> anchors the centered panel */
+.hmpro-primary-nav li.hmpro-li-has-mega{
+	position: relative !important;
+}
+
+/* Keep mega panel viewport-wide (do not constrain to nav width) */
+.hmpro-primary-nav li.hmpro-li-has-mega > .hmpro-mega-panel{
+	position: absolute;
+	left: 50% !important;
+	right: auto !important;
+	width: 100vw !important;
+	max-width: none;
+	transform: translateX(-50%) !important;
+	box-sizing: border-box;
+	overflow-x: hidden;
+}
+
+/* =========================================================
+   Mega Menu – Spacing + Column Alignment (Hero feel)
+   Fixes:
+   - Panel looks too tight (exam paper)
+   - Repeated root titles in lower rows become misaligned (wrap)
+   ========================================================= */
+
+/* Make the content area wider + more breathable */
+.hmpro-primary-nav li.hmpro-li-has-mega > .hmpro-mega-panel .hmpro-mega-layout{
+	max-width: 1520px;
+	margin: 0 auto;
+	padding: 34px 52px;
+}
+
+/* Keep column blocks consistent */
+.hmpro-mega-column-menu{
+	margin: 0;
+}
+.hmpro-mega-column-menu .hmpro-mega-root-title{
+	margin: 0 0 14px;
+}
+
+/* Desktop: force a stable 4-column grid so headings always line up */
+@media (min-width: 1100px){
+	.hmpro-context-mega .hmpro-builder-row{
+		display: grid;
+		grid-template-columns: repeat(4, minmax(220px, 1fr));
+		column-gap: 56px;
+		row-gap: 26px;
+		align-items: start;
+	}
+
+	/* override previous flex sizing safely */
+	.hmpro-context-mega .hmpro-builder-col{
+		flex: initial;
+		width: auto;
+		max-width: none;
+	}
+}
+
+/* Tablet: 2 columns (still aligned) */
+@media (min-width: 768px) and (max-width: 1099px){
+	.hmpro-context-mega .hmpro-builder-row{
+		display: grid;
+		grid-template-columns: repeat(2, minmax(240px, 1fr));
+		column-gap: 44px;
+		row-gap: 22px;
+		align-items: start;
+	}
+	.hmpro-context-mega .hmpro-builder-col{
+		flex: initial;
+		width: auto;
+		max-width: none;
+	}
+}
+
+/* Mobile: single column */
+@media (max-width: 767px){
+	.hmpro-primary-nav li.hmpro-li-has-mega > .hmpro-mega-panel .hmpro-mega-layout{
+		padding: 22px 18px;
+	}
+	.hmpro-context-mega .hmpro-builder-row{
+		display: block;
+	}
+}
+
+/* =========================================================
+   Mega Column Menu - Hard Override (Compact + Aligned)
+   Ensures header.css does not leak spacing into mega panel
+   ========================================================= */
+
+.hmpro-context-mega .hmpro-mega-column-menu .hmpro-mega-root-title {
+	margin: 0 0 10px;
+	line-height: 1.2;
+}
+
+.hmpro-context-mega .hmpro-mega-column-menu .hmpro-mega-col-list {
+	margin: 0 !important;
+	padding: 0 !important;
+	list-style: none !important;
+}
+
+.hmpro-context-mega .hmpro-mega-column-menu .hmpro-mega-col-item {
+	margin: 0 !important;
+	padding: 0 !important;
+}
+
+.hmpro-context-mega .hmpro-mega-column-menu .hmpro-mega-col-item + .hmpro-mega-col-item {
+	margin-top: 4px !important;
+}
+
+/* Higher specificity than header.css */
+.hmpro-context-mega .hmpro-mega-column-menu a.hmpro-mega-col-link {
+	display: block !important;
+	padding: 4px 0 !important;
+	line-height: 1.25 !important;
+	text-decoration: none;
+}
+
+/* Remove dropdown arrows inside mega panel (clean list like Trendyol) */
+.hmpro-context-mega li.menu-item-has-children > a:after {
+	content: none !important;
+}
+
+/* More link: slightly stronger */
+.hmpro-context-mega .hmpro-mega-more-link {
+	font-weight: 700;
+	padding-top: 8px !important;
+}
+
+/* ==============================
+   “More” expand/collapse behavior
+   ============================== */
+
+.hmpro-mega-column-menu.hmpro-more-mode-expand .hmpro-mega-hidden{
+	display: none;
+}
+
+.hmpro-mega-column-menu.hmpro-more-mode-expand.hmpro-more-open .hmpro-mega-hidden{
+	display: block;
+}
+
+.hmpro-mega-more-toggle{
+	font-weight: 700;
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+}
+
+/* Simple caret */
+.hmpro-mega-more-toggle:after{
+	content: "▾";
+	font-size: 12px;
+	opacity: .8;
+}
+
+.hmpro-mega-column-menu.hmpro-more-open .hmpro-mega-more-toggle:after{
+	content: "▴";
+}
+
+/* ==========================================
+   Mega Column Menu - Nested hierarchy visuals
+   Makes messy WP menu structures readable
+   ========================================== */
+
+.hmpro-context-mega .hmpro-mega-column-menu .hmpro-mega-col-item > ul{
+	margin-top: 4px;
+	padding-left: 14px;
+}
+
+.hmpro-context-mega .hmpro-mega-column-menu .hmpro-depth-2{
+	border-left: 1px solid rgba(0,0,0,0.08);
+	padding-left: 12px !important;
+	margin-left: 2px;
+}
+
+.hmpro-context-mega .hmpro-mega-column-menu .hmpro-depth-2 .hmpro-mega-col-link{
+	font-size: 0.95em;
+	opacity: 0.95;
+}
+
+.hmpro-context-mega .hmpro-mega-column-menu .hmpro-depth-3{
+	border-left: 1px solid rgba(0,0,0,0.06);
+	padding-left: 12px !important;
+	margin-left: 2px;
+}
+
+.hmpro-context-mega .hmpro-mega-column-menu .hmpro-depth-3 .hmpro-mega-col-link{
+	font-size: 0.92em;
+	opacity: 0.90;
+}
+
+.hmpro-context-mega .hmpro-mega-column-menu .hmpro-depth-4 .hmpro-mega-col-link{
+	font-size: 0.90em;
+	opacity: 0.88;
+}
+
+.hmpro-context-mega .hmpro-mega-column-menu .hmpro-depth-5 .hmpro-mega-col-link{
+	font-size: 0.89em;
+	opacity: 0.86;
+}
+
+.hmpro-context-mega .hmpro-mega-column-menu .hmpro-depth-6 .hmpro-mega-col-link{
+	font-size: 0.88em;
+	opacity: 0.84;
+}
+
+/* =========================================================
+   Mega Menu – Final fixes (centered panel + stable click mode)
+   - Ensure panel opens centered relative to the full page
+   - In click mode, disable hover-open so caret toggling can close cleanly
+   ========================================================= */
+
+/* Global sizing knobs (safe defaults) */
+:root{
+	--hmpro-mega-panel-max: 1240px;  /* Astra-like dropdown width */
+	--hmpro-mega-panel-gap: 24px;    /* viewport side padding */
+}
+
+/* Avoid random positioned ancestors affecting the mega panel */
+#site-header .hmpro-primary-nav li.hmpro-li-has-mega{
+	position: static !important;
+}
+
+/* Center the mega panel as a fixed-width container (NOT 100vw) */
+#site-header .hmpro-primary-nav li.hmpro-li-has-mega > .hmpro-mega-panel{
+	display: none;
+	position: absolute !important;
+	top: 100% !important;
+	left: 50% !important;
+	right: auto !important;
+	transform: translateX(-50%) !important;
+	width: min(var(--hmpro-mega-panel-max), calc(100vw - (var(--hmpro-mega-panel-gap) * 2))) !important;
+	max-width: min(var(--hmpro-mega-panel-max), calc(100vw - (var(--hmpro-mega-panel-gap) * 2))) !important;
+	box-sizing: border-box;
+	z-index: 999999;
+	background: var(--hmpro-mega-bg-color, #fff);
+	border-top: 1px solid rgba(0,0,0,0.08);
+	box-shadow: 0 18px 40px rgba(0,0,0,0.14);
+	overflow: hidden;
+}
+
+/* Ensure inner layout fills the centered panel cleanly */
+#site-header .hmpro-primary-nav li.hmpro-li-has-mega > .hmpro-mega-panel .hmpro-mega-layout{
+	width: 100%;
+	max-width: 100% !important;
+	margin: 0 !important;
+}
+
+@media (max-width: 640px){
+	:root{ --hmpro-mega-panel-gap: 14px; }
+}
+
+/* Hover mode (default) */
+#site-header .hmpro-primary-nav li.hmpro-li-has-mega:hover > .hmpro-mega-panel,
+#site-header .hmpro-primary-nav li.hmpro-li-has-mega:focus-within > .hmpro-mega-panel{
+	display: block;
+}
+
+/* Click mode: never open on hover */
+body.hmpro-mega-click #site-header .hmpro-primary-nav li.hmpro-li-has-mega:hover > .hmpro-mega-panel,
+body.hmpro-mega-click #site-header .hmpro-primary-nav li.hmpro-li-has-mega:focus-within > .hmpro-mega-panel{
+	display: none !important;
+}
+
+/* Click mode: only open via .hmpro-mega-open */
+body.hmpro-mega-click #site-header .hmpro-primary-nav li.hmpro-li-has-mega.hmpro-mega-open > .hmpro-mega-panel{
+	display: block !important;
+}
+
+/* Replace pseudo caret with a real toggle caret for mega items */
+#site-header .hmpro-primary-nav li.hmpro-li-has-mega > a:after{
+	content: none !important;
+}
+
+#site-header .hmpro-primary-nav .hmpro-mega-toggle{
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	margin-left: 6px;
+	width: 16px;
+	height: 16px;
+	line-height: 1;
+	cursor: pointer;
+	user-select: none;
+}
+
+#site-header .hmpro-primary-nav .hmpro-mega-toggle:before{
+	content: "▾";
+	font-size: 12px;
+}
+
+/* Visual feedback in click mode */
+body.hmpro-mega-click #site-header .hmpro-primary-nav li.hmpro-li-has-mega.hmpro-mega-open > a .hmpro-mega-toggle:before{
+	content: "▴";
+}
+
+/* =========================================================
+   Mega Menu (legacy builder render) – column stacking fix
+   The mega region was still using base.css flex-row columns:
+   menu + image could sit side-by-side and overflow (often in col 4).
+   Scope strictly to mega panel + mega context.
+   ========================================================= */
+
+.hmpro-primary-nav li.hmpro-li-has-mega > .hmpro-mega-panel
+  .hmpro-builder-region.hmpro-context-mega .hmpro-builder-row{
+  align-items: flex-start;
+}
+
+.hmpro-primary-nav li.hmpro-li-has-mega > .hmpro-mega-panel
+  .hmpro-builder-region.hmpro-context-mega .hmpro-builder-col{
+  flex-direction: column;     /* IMPORTANT: stack widgets vertically */
+  align-items: stretch;       /* let widgets fill column width */
+  justify-content: flex-start;
+  min-width: 0;               /* allow shrink inside flex */
+  gap: 14px;                  /* consistent spacing like canvas */
+}
+
+/* Defensive: never allow components to exceed their column */
+.hmpro-primary-nav li.hmpro-li-has-mega > .hmpro-mega-panel
+  .hmpro-builder-region.hmpro-context-mega .hmpro-builder-col > *{
+  max-width: 100%;
+  min-width: 0;
+}
+
+/* Ensure image component fills column width (prevents right spill) */
+.hmpro-primary-nav li.hmpro-li-has-mega > .hmpro-mega-panel
+  .hmpro-builder-region.hmpro-context-mega .hmpro-comp-image,
+.hmpro-primary-nav li.hmpro-li-has-mega > .hmpro-mega-panel
+  .hmpro-builder-region.hmpro-context-mega .hmpro-mega-image{
+  width: 100%;
+  max-width: 100%;
+}

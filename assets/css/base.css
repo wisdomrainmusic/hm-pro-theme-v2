@@ -1,0 +1,223 @@
+:root {
+	--hm-primary: #111111;
+	--hm-dark: #000000;
+	--hm-bg: #ffffff;
+	--hm-surface: #f7f7f7;
+	--hm-text: #222222;
+	--hm-muted: #707070;
+	--hm-link: var(--hm-primary);
+	--hm-border: #e5e5e5;
+	--hm-footer: #111111;
+	--hmpro-logo-max-height: 56px;
+	/* Fixed logo SLOT width so logo scaling never shifts header nav */
+	/* responsive clamp keeps it reasonable on smaller screens */
+	--hmpro-logo-slot-width: clamp(160px, 18vw, 240px);
+	/*
+	 * Header side columns MUST be equal width to keep the center nav perfectly centered.
+	 * Right side can be wider (social + search + CTA), so we reserve a symmetrical slot.
+	 */
+	--hmpro-header-side-slot-width: clamp(220px, 26vw, 380px);
+	--hmpro-footer-logo-max-height: 96px;
+	--hmpro-container-pad: 24px;
+
+	--hm-body-font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+	--hm-heading-font: inherit;
+}
+
+/* Base colors */
+html, body {
+	height: 100%;
+}
+
+/* Prevent accidental horizontal overflow caused by 100vw panels/blocks (mega menu, full-width blocks)
+   This removes the bottom horizontal scrollbar on desktop without changing layouts. */
+html {
+	overflow-x: clip;
+}
+
+body {
+	background-color: var(--hm-bg);
+	color: var(--hm-dark);
+	font-family: var(--hm-body-font);
+	overflow-x: hidden; /* fallback for browsers without overflow-x: clip */
+
+	/* Sticky footer:
+	   Keep footer at the bottom when page content is short.
+	   Safe for long pages (footer flows normally). */
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+
+/* Main content grows to push footer down */
+main.site-main,
+main#primary,
+#primary.site-main {
+	flex: 1 0 auto;
+}
+
+/* Footer must not shrink */
+footer,
+#site-footer {
+	flex-shrink: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: var(--hm-heading-font);
+	color: var(--hm-dark);
+}
+
+.hmpro-container {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: var(--hmpro-container-pad, 24px);
+}
+
+/* Buttons */
+button,
+input[type="submit"],
+.button {
+	background-color: var(--hm-primary);
+	border-color: var(--hm-primary);
+	color: #fff;
+	padding: 10px 14px;
+	border-radius: 8px;
+	cursor: pointer;
+}
+
+button:hover,
+input[type="submit"]:hover,
+.button:hover {
+	background-color: var(--hm-dark);
+	border-color: var(--hm-dark);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea,
+select {
+	border: 1px solid var(--hm-border);
+	border-radius: 8px;
+	padding: 10px 12px;
+	background: var(--hm-surface);
+	color: var(--hm-text);
+}
+
+a {
+	color: var(--hm-link);
+	text-decoration: none;
+}
+
+a:hover {
+	color: var(--hm-primary);
+}
+
+/* =========================================================
+   Global Media Reset (Astra-like)
+   - Prevent layout shift when images load
+   - Keep Elementor + custom widgets stable
+   ========================================================= */
+
+img,
+picture,
+video,
+canvas,
+svg {
+	max-width: 100%;
+}
+
+/* Most CLS cases happen because images are inline by default */
+img,
+picture img {
+	display: block;
+	height: auto;
+}
+
+/* If width/height attributes exist, preserve intrinsic ratio */
+img[width][height] {
+	height: auto;
+}
+
+/* Elementor sometimes outputs images inside inline contexts */
+.elementor img {
+	height: auto;
+}
+
+/* Avoid unexpected stretching in modern layouts */
+img {
+	object-fit: cover;
+}
+
+/* Respect cases where object-fit should not be cover (icons/logos) */
+.hmpro-logo img,
+.custom-logo-link img,
+.hmpro-social__icon {
+	object-fit: contain;
+}
+
+.hmpro-btn{
+	display:inline-flex;
+	align-items:center;
+	justify-content:center;
+	padding:10px 14px;
+	border-radius:10px;
+	border:1px solid rgba(0,0,0,.2);
+	text-decoration:none;
+}
+.hmpro-spacer{display:inline-block;}
+
+/* Builder Frontend Base (Commit 018) */
+.hmpro-builder-region{
+	width:100%;
+}
+.hmpro-builder-row{
+	display:flex;
+	gap:16px;
+	align-items:center;
+	justify-content:space-between;
+	padding:12px 0;
+}
+.hmpro-builder-col{
+	flex:1;
+	min-width:0;
+	display:flex;
+	gap:12px;
+	align-items:center;
+}
+.hmpro-col-12{flex-basis:100%;}
+.hmpro-col-6{flex-basis:50%;}
+.hmpro-col-4{flex-basis:33.333%;}
+.hmpro-col-3{flex-basis:25%;}
+
+.hmpro-align-left{justify-content:flex-start;}
+.hmpro-align-center{justify-content:center;}
+.hmpro-align-right{justify-content:flex-end;}
+
+@media (max-width: 768px){
+	.hmpro-builder-row{flex-direction:column;align-items:stretch;}
+	.hmpro-builder-col{justify-content:space-between;}
+}
+
+
+/* Social component (Commit 020) */
+.hmpro-social{display:inline-flex;align-items:center;}
+.hmpro-social__link{display:inline-flex;align-items:center;text-decoration:none;line-height:1;}
+.hmpro-social__icon{width:20px;height:20px;display:block;fill:currentColor;}
+.hmpro-social--small .hmpro-social__icon{width:16px;height:16px;}
+.hmpro-social--large .hmpro-social__icon{width:24px;height:24px;}
+.hmpro-social--gap-small{gap:8px;}
+.hmpro-social--gap-normal{gap:12px;}
+.hmpro-social--gap-large{gap:16px;}
+
+/* Title visibility toggle fallback (if any template outputs titles) */
+.hmpro-hide-title .entry-title,
+.hmpro-hide-title .page-title,
+.hmpro-hide-title .wp-block-post-title{
+	display:none !important;
+}

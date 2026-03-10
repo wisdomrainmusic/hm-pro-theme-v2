@@ -1,0 +1,97 @@
+/*
+Theme Name: HM Pro Theme
+Theme URI: https://hizlimagazapro.com
+Author: Hızlı Mağaza Pro
+Author URI: https://hizlimagazapro.com
+Description: Premium WooCommerce & Elementor theme with preset color and typography engine.
+Version: 0.1.0
+Requires at least: 6.0
+Tested up to: 6.5
+Requires PHP: 7.4
+License: GPL v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: hm-pro-theme
+Tags: e-commerce, woocommerce, elementor, custom-colors, custom-logo, theme-options
+*/
+
+:root {
+	--hmpro-accent: #111;
+	--hmpro-accent-contrast: #fff;
+	--hmpro-icon-bg: rgba(0, 0, 0, 0.04);
+	--hmpro-icon-border: rgba(0, 0, 0, 0.08);
+	/* Primary Menu (Header Builder: Main nav) */
+	--hmpro-menu-text-color: inherit;
+	--hmpro-menu-hover-color: var(--hmpro-accent);
+	--hmpro-menu-active-color: var(--hmpro-accent);
+	--hmpro-social-icon-color: var(--hmpro-accent);
+	--hmpro-social-icon-bg: var(--hmpro-icon-bg);
+	--hmpro-social-icon-border: var(--hmpro-icon-border);
+	--hmpro-social-icon-hover-color: var(--hmpro-accent);
+	--hmpro-social-icon-hover-bg: rgba(0, 0, 0, 0.07);
+	--hmpro-social-icon-hover-border: rgba(0, 0, 0, 0.14);
+	--hmpro-social-icon-contrast: var(--hmpro-accent-contrast);
+	--hmpro-social-icon-size: 34px;
+	--hmpro-social-icon-radius: 999px;
+	--hmpro-social-icon-svg-size: 18px;
+}
+
+.hmpro-socialicon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	line-height: 1;
+	width: var(--hmpro-social-icon-size);
+	height: var(--hmpro-social-icon-size);
+	border-radius: var(--hmpro-social-icon-radius);
+	color: var(--hmpro-social-icon-color);
+	text-decoration: none;
+	background: var(--hmpro-social-icon-bg);
+	border: 1px solid var(--hmpro-social-icon-border);
+	transition: transform 0.15s ease, opacity 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.hmpro-socialicon:hover,
+.hmpro-socialicon:focus {
+	transform: translateY(-1px);
+	opacity: 0.95;
+	box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+	color: var(--hmpro-social-icon-hover-color);
+	background: var(--hmpro-social-icon-hover-bg);
+	border-color: var(--hmpro-social-icon-hover-border);
+}
+
+.hmpro-socialicon:focus {
+	outline: none;
+	box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.12), 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.hmpro-socialicon.is-transparent {
+	background: transparent;
+	border: 0;
+	box-shadow: none;
+}
+
+.hmpro-socialicon.is-transparent:hover,
+.hmpro-socialicon.is-transparent:focus {
+	background: transparent;
+	box-shadow: none;
+}
+
+.hmpro-socialicon__svg {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	line-height: 0;
+}
+
+.hmpro-socialicon__svg svg {
+	width: var(--hmpro-social-icon-svg-size);
+	height: var(--hmpro-social-icon-svg-size);
+	display: block;
+}
+
+.hmpro-socialicon__badge {
+	font-weight: 700;
+	font-size: 12px;
+	letter-spacing: 0.2px;
+}

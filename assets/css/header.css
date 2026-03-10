@@ -1,0 +1,924 @@
+/* =========================================================
+   Primary Navigation (Base Fix)
+   - Makes WP menu look normal (no bullets, horizontal)
+   - Enables submenu dropdown hover for non-mega items
+   Multi-level dropdown improvements
+   Mega Menu integration fixes
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   Header Background Banner (Top + Main)
+   - Uses Hero-like CSS variables
+   - Renders inside #site-header when enabled
+   --------------------------------------------------------- */
+
+#site-header.hmpro-hb-enabled{
+	min-height: var(--hmpro-hb-h, 320px);
+	margin-bottom: var(--hmpro-hb-after-gap, 0px);
+}
+
+.hmpro-hb-banner{
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	min-height: var(--hmpro-hb-h, 320px);
+	background-size: cover;
+	background-position: center center;
+	background-repeat: no-repeat;
+	overflow: hidden;
+	z-index: 0;
+}
+
+/* Slider / gallery support (fade) */
+.hmpro-hb-banner--slider{
+	background-image: none !important;
+}
+.hmpro-hb-slides{
+	position:absolute;
+	inset:0;
+	z-index:0;
+}
+.hmpro-hb-slide{
+	position:absolute;
+	inset:0;
+	background-size: cover;
+	background-position: center center;
+	background-repeat: no-repeat;
+	opacity:0;
+	transition: opacity 700ms ease;
+}
+.hmpro-hb-slide.is-active{
+	opacity:1;
+}
+
+.hmpro-hb-banner__video{
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center center;
+	z-index: 0;
+}
+
+.hmpro-hb-banner__overlay{
+	position: absolute;
+	inset: 0;
+	background: rgba(0, 0, 0, var(--hmpro-hb-overlay, .3));
+	z-index: 1;
+	pointer-events: none;
+}
+
+.hmpro-hb-banner__inner{
+	position: relative;
+	z-index: 2;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-start;
+	padding: 120px 24px 40px;
+	max-width: 1200px;
+	margin: 0 auto;
+}
+
+.hmpro-hb-banner__content{
+	font-family: var(--hmpro-hb-text-font, var(--hm-body-font));
+	transform: translate3d(var(--hmpro-hb-group-x, 0px), var(--hmpro-hb-group-y, 0px), 0) scale(var(--hmpro-hb-group-scale, 1));
+	transform-origin: left top;
+	will-change: transform;
+}
+
+.hmpro-hb-banner__title,
+.hmpro-hb-banner__text{
+	font-family: var(--hmpro-hb-text-font, var(--hm-body-font));
+	color: var(--hmpro-hb-text-color, #fff);
+}
+
+.hmpro-hb-banner__title{
+	font-family: var(--hmpro-hb-title-font, var(--hm-heading-font));
+	color: var(--hmpro-hb-title-color, #fff);
+	font-size: var(--hmpro-hb-title-size, 34px);
+	line-height: 1.1;
+	margin: 0 0 10px;
+}
+
+.hmpro-hb-banner__text{
+	font-size: var(--hmpro-hb-text-size, 16px);
+	margin: 0 0 16px;
+	max-width: 720px;
+}
+
+.hmpro-hb-banner__btn{
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	background: var(--hmpro-hb-btn-bg, #d4af37);
+	color: var(--hmpro-hb-btn-color, #111);
+	padding: 12px 18px;
+	border-radius: 999px;
+	text-decoration: none;
+	font-weight: 600;
+}
+
+.hmpro-hb-banner__btn:hover{
+	filter: brightness(0.95);
+}
+
+/* Ensure header regions sit above the banner */
+#site-header.hmpro-hb-enabled .hmpro-builder-region{
+	position: relative;
+	z-index: 3;
+}
+
+/* IMPORTANT:
+   Do NOT change the hamburger to position:relative when the banner is enabled.
+   The toggle is absolutely positioned (right/top) and needs to stay that way,
+   otherwise it falls back into document flow and appears on the left.
+*/
+#site-header.hmpro-hb-enabled .hmpro-mobile-menu-toggle{
+	z-index: 3;
+}
+
+/* Let the banner show through. Region wrappers may have their own backgrounds set via Customizer.
+   When header banner is enabled, we prefer a transparent base so the background image/video is visible. */
+#site-header.hmpro-hb-enabled .hmpro-builder-region,
+#site-header.hmpro-hb-enabled .hmpro-builder-region .hmpro-region,
+#site-header.hmpro-hb-enabled .hmpro-builder-region .hmpro-region-inner{
+	background: transparent !important;
+}
+
+@media (max-width: 1024px){
+	.hmpro-hb-banner__inner{
+		justify-content: flex-start;
+	}
+	.hmpro-hb-banner__content{
+		margin-top: var(--hmpro-hb-group-top-m, 0px);
+		transform: translate3d(0, 0, 0) scale(var(--hmpro-hb-group-scale, 1));
+	}
+}
+
+@media (max-width: 768px){
+	#site-header.hmpro-hb-enabled{ min-height: var(--hmpro-hb-h-m, var(--hmpro-hb-h, 320px)); }
+	.hmpro-hb-banner{ min-height: var(--hmpro-hb-h-m, var(--hmpro-hb-h, 320px)); }
+	.hmpro-hb-banner--hide-mobile{ display: none; }
+	#site-header.hmpro-hb-hide-mobile{ min-height: 0; }
+	.hmpro-hb-banner__inner{ padding: 88px 16px 28px; max-width: 100%; }
+	.hmpro-hb-banner__content{
+		margin-top: var(--hmpro-hb-group-top-m, 0px);
+		transform: translate3d(0, 0, 0) scale(var(--hmpro-hb-group-scale-m, var(--hmpro-hb-group-scale, 1)));
+	}
+}
+
+/* Anchor mega dropdown to the full header width, not the nav component width */
+#site-header,
+.site-header {
+	position: relative;
+}
+
+/* Use our stable wrapper (works regardless of WP/theme classes) */
+.hmpro-primary-nav ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+/* Top-level horizontal */
+.hmpro-primary-nav > ul > li,
+.hmpro-primary-nav > .menu > li,
+.hmpro-primary-nav > ul.menu > li {
+	display: inline-block;
+	position: relative;
+	vertical-align: middle;
+}
+
+/* Top-level nav links only (do not affect mega panel inner links) */
+.hmpro-primary-nav > ul > li > a,
+.hmpro-primary-nav > .menu > li > a,
+.hmpro-primary-nav > ul.menu > li > a {
+	display: inline-block;
+	padding: 10px 12px;
+	color: inherit;
+	text-decoration: none;
+}
+
+/* ---------------------------------------------------------
+   Submenus (NORMAL dropdown)
+   IMPORTANT: scope to WP submenu markup only (ul.sub-menu),
+   otherwise it will hide mega menu column lists (also <ul>).
+   --------------------------------------------------------- */
+.hmpro-primary-nav ul.sub-menu {
+	display: none;
+	position: absolute;
+	left: 0;
+	top: 100%;
+	min-width: 220px;
+	background: #fff;
+	border: 1px solid rgba(0, 0, 0, 0.08);
+	box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+	z-index: 9999;
+}
+
+/* Open on hover */
+.hmpro-primary-nav li:hover > ul.sub-menu {
+	display: block;
+}
+
+/* Submenu items */
+.hmpro-primary-nav ul.sub-menu li {
+	display: block;
+	position: relative;
+}
+
+/* Make submenu hover area stable (avoid accidental close) */
+.hmpro-primary-nav ul.sub-menu {
+	padding: 10px;
+}
+
+.hmpro-primary-nav ul.sub-menu li a {
+	display: block;
+	padding: 10px 12px;
+	text-decoration: none;
+}
+
+/* Third level flyout */
+.hmpro-primary-nav ul.sub-menu li ul.sub-menu {
+	left: 100%;
+	top: 0;
+}
+
+/* Optional: indicator for items that have children */
+.hmpro-primary-nav li.menu-item-has-children > a:after {
+	content: "▾";
+	font-size: 12px;
+	margin-left: 6px;
+}
+.hmpro-primary-nav li ul li.menu-item-has-children > a:after {
+	content: "▸";
+	float: right;
+	margin-left: 12px;
+}
+
+/* Builder Frontend Base (Commit 018) */
+.hmpro-header-builder{
+	width:100%;
+}
+
+/* ---------------------------------------------------------
+   Header Builder
+   The builder renderer assigns left/center/right classes by column index.
+   Using flex:1 on all columns makes them equal width, which can squeeze
+   the center navigation and cause top-level items to wrap (e.g. one item
+   drops to a new line). Keep footer builder behavior unchanged by scoping
+   these overrides to the header builder only.
+   --------------------------------------------------------- */
+.hmpro-header-builder .hmpro-builder-col{
+	flex:0 0 auto;
+}
+.hmpro-header-builder .hmpro-builder-col.hmpro-align-center{
+	flex:1 1 auto;
+	min-width:0;
+}
+/* Keep header center nav perfectly centered:
+   reserve equal-width left & right slots, independent of logo scaling */
+.hmpro-header-builder .hmpro-region-header_main .hmpro-builder-col.hmpro-align-left{
+	flex: 0 0 var(--hmpro-header-side-slot-width);
+	max-width: var(--hmpro-header-side-slot-width);
+	min-width: var(--hmpro-header-side-slot-width);
+	overflow:hidden;
+}
+.hmpro-header-builder .hmpro-region-header_main .hmpro-builder-col.hmpro-align-right{
+	flex: 0 0 var(--hmpro-header-side-slot-width);
+	max-width: var(--hmpro-header-side-slot-width);
+	min-width: var(--hmpro-header-side-slot-width);
+	overflow:hidden;
+}
+
+/* Make top-level header menus a single horizontal line when space allows */
+.hmpro-header-builder .hmpro-primary-nav > ul,
+.hmpro-header-builder .hmpro-primary-nav .menu{
+	white-space:nowrap;
+}
+
+.hmpro-logo img,
+.hmpro-logo img.custom-logo,
+.hmpro-logo .custom-logo,
+.hmpro-logo .custom-logo-link img{
+  max-height: var(--hmpro-logo-max-height);
+  width:auto !important;
+  height:auto !important;
+	display:block;
+	object-fit:contain;
+	max-width: 100%;
+}
+
+/*
+ * Logo slot locking
+ * When the Customizer increases logo max-height, the image's intrinsic width can also grow,
+ * causing the left header column to expand and the menu to shift. By constraining the logo
+ * to a fixed slot width, we allow the logo to scale within that space without affecting
+ * the navigation layout.
+ */
+.hmpro-context-header .hmpro-logo-wrap{
+	width: 100%;
+	max-width: 100%;
+	display:flex;
+	align-items:center;
+	overflow:hidden;
+}
+.hmpro-context-header .hmpro-logo-wrap .hmpro-logo{
+	max-width:100%;
+	width:100%;
+	display:block;
+}
+.hmpro-context-header .hmpro-logo-wrap .hmpro-logo img{
+	max-width:100%;
+}
+/* Logo itself should not expand to the full reserved side slot */
+.hmpro-header-builder .hmpro-region-header_main .hmpro-logo-wrap{
+	max-width: var(--hmpro-logo-slot-width);
+}
+.hmpro-logo-text{
+	font-weight:600;
+	text-decoration:none;
+}
+.hmpro-nav .hmpro-menu,
+.hmpro-primary-nav .hmpro-menu{
+	list-style:none;
+	margin:0;
+	padding:0;
+	display:flex;
+	gap:22px;
+	align-items:center;
+}
+.hmpro-nav .hmpro-menu li,
+.hmpro-primary-nav .hmpro-menu li{
+	margin:0;
+	padding:0;
+}
+.hmpro-nav .hmpro-menu a,
+.hmpro-primary-nav .hmpro-menu a{
+	text-decoration:none;
+	color: var(--hmpro-menu-text-color);
+	transition: color 0.15s ease;
+}
+.hmpro-nav .hmpro-menu a:hover,
+.hmpro-nav .hmpro-menu a:focus,
+.hmpro-primary-nav .hmpro-menu a:hover,
+.hmpro-primary-nav .hmpro-menu a:focus{
+	color: var(--hmpro-menu-hover-color);
+}
+.hmpro-nav .hmpro-menu .current-menu-item > a,
+.hmpro-nav .hmpro-menu .current-menu-ancestor > a,
+.hmpro-nav .hmpro-menu .current_page_item > a,
+.hmpro-nav .hmpro-menu .current_page_ancestor > a,
+.hmpro-primary-nav .hmpro-menu .current-menu-item > a,
+.hmpro-primary-nav .hmpro-menu .current-menu-ancestor > a,
+.hmpro-primary-nav .hmpro-menu .current_page_item > a,
+.hmpro-primary-nav .hmpro-menu .current_page_ancestor > a{
+	color: var(--hmpro-menu-active-color);
+}
+.hmpro-search{
+	display:flex;
+	gap:8px;
+	align-items:center;
+}
+
+/* ---------------------------------------------------------
+   Cart component (Header Builder)
+   - Icon-only cart with badge count
+   - Hide badge when empty
+   --------------------------------------------------------- */
+.hmpro-cart{
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-decoration: none;
+	color: inherit;
+	line-height: 1;
+}
+
+.hmpro-cart-icon{
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.hmpro-cart-count{
+	position: absolute;
+	top: -6px;
+	right: -8px;
+	min-width: 18px;
+	height: 18px;
+	padding: 0 5px;
+	border-radius: 999px;
+	font-size: 11px;
+	line-height: 18px;
+	text-align: center;
+	background: currentColor;
+	color: #fff;
+	transform: scale(0.95);
+}
+
+.hmpro-cart--empty .hmpro-cart-count{
+	display:none;
+}
+.hmpro-search-field{
+	padding:8px 10px;
+	border:1px solid rgba(0,0,0,.2);
+	border-radius:8px;
+	color: var(--hmpro-text, #111);
+	background: transparent;
+}
+.hmpro-search-field::placeholder{
+	opacity:.75;
+}
+.hmpro-search-submit{
+	padding:8px 12px;
+	border-radius:8px;
+	cursor:pointer;
+
+	/* chameleon: theme accent by default */
+	background: var(--hmpro-accent, #6b4a50);
+	border: 1px solid var(--hmpro-accent, #6b4a50);
+	color: var(--hmpro-accent-contrast, #fff);
+
+	transition: opacity .15s ease, transform .15s ease, filter .15s ease;
+}
+.hmpro-search-submit:hover,
+.hmpro-search-submit:focus{
+	opacity:.95;
+	transform: translateY(-1px);
+	filter: brightness(.95);
+}
+.hmpro-search-submit:disabled{
+	opacity:.55;
+	cursor:not-allowed;
+	transform:none;
+	filter:none;
+}
+
+@media (max-width: 768px){
+	.hmpro-nav .hmpro-menu{flex-wrap:wrap;gap:14px;}
+	/* On mobile, allow columns to flow naturally (centered nav is hidden anyway) */
+	.hmpro-header-builder .hmpro-region-header_main .hmpro-builder-col.hmpro-align-left{
+		flex: 0 0 auto;
+		max-width: 100%;
+		min-width: 0;
+	}
+	.hmpro-header-builder .hmpro-region-header_main .hmpro-builder-col.hmpro-align-right{
+		flex: 0 0 auto;
+		max-width: 100%;
+		min-width: 0;
+	}
+}
+
+/* =========================================================
+   Mobile Header + Right Drawer (Commit A)
+   - Hides desktop primary nav on mobile
+   - Shows hamburger toggle
+   - Right-side off-canvas drawer with overlay
+   ========================================================= */
+
+.hmpro-header-account-cta{
+	position:absolute;
+	right:14px;
+	/* Move CTA down so it doesn't sit on top of Header Builder elements (e.g. social icons) */
+	top:56px;
+	z-index:30;
+}
+.hmpro-header-account-cta .hmpro-account-link{
+	display:inline-flex;
+	align-items:center;
+	justify-content:center;
+	padding:6px 10px;
+	border-radius:9px;
+	text-decoration:none;
+	border:1px solid rgba(0,0,0,.12);
+	background: rgba(255,255,255,.65);
+	backdrop-filter: blur(6px);
+	color: inherit;
+	font-weight:600;
+	font-size:13px;
+}
+
+.hmpro-mobile-menu-toggle{
+	display:none;
+	position:absolute;
+	right:14px;
+	top:56px;
+	z-index:40;
+	width:44px;
+	height:44px;
+	border-radius:12px;
+	border:1px solid rgba(0,0,0,.12);
+	background: rgba(255,255,255,.70);
+	backdrop-filter: blur(6px);
+	cursor:pointer;
+	color:#222;
+	align-items:center;
+	justify-content:center;
+}
+.hmpro-mobile-menu-toggle .hmpro-icon{
+	display:block;
+}
+
+
+
+/* Accessibility: visible focus for keyboard users */
+:where(.hmpro-mobile-menu-toggle, .hmpro-mobile-drawer-close, .hmpro-mobile-account-cta, .hmpro-mobile-nav a):focus-visible{
+	outline: 2px solid currentColor;
+	outline-offset: 2px;
+}
+
+/* Slight hover/active polish */
+.hmpro-mobile-menu-toggle:hover{
+	transform: translateY(-1px);
+}
+.hmpro-mobile-menu-toggle:active{
+	transform: translateY(0);
+}
+
+/* Drawer base */
+.hmpro-mobile-drawer{
+	position:fixed;
+	inset:0;
+	z-index:99999;
+	pointer-events:none;
+	opacity:0;
+	transition: opacity .18s ease;
+}
+
+/* Mobile-only visibility rules (prevents hamburger from showing on desktop) */
+@media (max-width: 768px){
+	.hmpro-mobile-menu-toggle{ display:flex; }
+
+	/* On mobile we already show account CTA inside the drawer header */
+	.hmpro-header-account-cta{ display:none; }
+}
+.hmpro-mobile-drawer.is-open{
+	pointer-events:auto;
+	opacity:1;
+}
+.hmpro-mobile-drawer-overlay{
+	position:absolute;
+	inset:0;
+	background: rgba(0,0,0,.35);
+}
+.hmpro-mobile-drawer-panel{
+	position:absolute;
+	top:0;
+	right:0;
+	height:100%;
+	width:340px;
+	max-width:86vw;
+	background:#fff;
+	transform: translateX(100%);
+	transition: transform .22s ease;
+	display:flex;
+	flex-direction:column;
+}
+.hmpro-mobile-drawer.is-open .hmpro-mobile-drawer-panel{
+	transform: translateX(0);
+}
+
+.hmpro-mobile-drawer-head{
+	display:flex;
+	align-items:flex-start;
+	gap:12px;
+	padding:14px;
+	border-bottom:1px solid rgba(0,0,0,.08);
+}
+
+.hmpro-mobile-drawer-head--account-menu{
+	align-items:flex-start;
+}
+
+.hmpro-mobile-drawer-head--account-menu .hmpro-mobile-drawer-close{
+	flex:0 0 auto;
+}
+.hmpro-mobile-drawer-close{
+	flex:0 0 auto;
+	color:#222;
+	display:inline-flex;
+	align-items:center;
+	justify-content:center;
+	font-weight:800;
+	width:44px;
+	height:44px;
+	border-radius:12px;
+	border:1px solid rgba(0,0,0,.10);
+	background: rgba(255,255,255,.70);
+	backdrop-filter: blur(6px);
+	cursor:pointer;
+}
+.hmpro-mobile-drawer-close .hmpro-icon{ display:block; }
+.hmpro-mobile-account-cta{
+	flex:1 1 auto;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	padding:10px 12px;
+	border-radius:12px;
+	text-decoration:none;
+	font-weight:700;
+	background: var(--hmpro-accent, #111);
+	color: var(--hmpro-accent-contrast, #fff);
+}
+
+
+.hmpro-mobile-account-menu{
+	flex:1 1 auto;
+	display:flex;
+	flex-direction:column;
+	gap:12px;
+}
+
+.hmpro-mobile-account-menu__item{
+	display:flex;
+	align-items:center;
+	justify-content:space-between;
+	gap:16px;
+	width:100%;
+	min-height:64px;
+	padding:18px 20px;
+	text-decoration:none;
+	color:inherit;
+	background:#fff;
+	border:1px solid rgba(0,0,0,.10);
+	border-radius:0;
+	transition:background-color .2s ease, border-color .2s ease, transform .2s ease;
+}
+
+.hmpro-mobile-account-menu__item:hover{
+	background:#fafafa;
+	border-color:rgba(0,0,0,.16);
+}
+
+.hmpro-mobile-account-menu__item:active{
+	transform:translateY(1px);
+}
+
+.hmpro-mobile-account-menu__label{
+	font-size:18px;
+	line-height:1.35;
+	font-weight:700;
+	color:#0f172a;
+}
+
+.hmpro-mobile-account-menu__value{
+	display:inline-flex;
+	align-items:center;
+	gap:12px;
+	font-size:16px;
+	line-height:1.35;
+	font-weight:500;
+	color:#64748b;
+	white-space:nowrap;
+}
+
+.hmpro-mobile-account-menu__value::after{
+	content:"";
+	display:inline-block;
+	width:0;
+	height:0;
+	border-top:8px solid transparent;
+	border-bottom:8px solid transparent;
+	border-left:10px solid currentColor;
+	opacity:.75;
+}
+
+.hmpro-mobile-nav{
+	padding:14px;
+	overflow:auto;
+	-webkit-overflow-scrolling:touch;
+}
+.hmpro-mobile-nav ul{
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+.hmpro-mobile-nav > ul > li{
+	border-bottom:1px solid rgba(0,0,0,.06);
+}
+.hmpro-mobile-nav a{
+	display:block;
+	padding:12px 6px;
+	text-decoration:none;
+	color:inherit;
+	font-weight:600;
+}
+.hmpro-mobile-nav ul.sub-menu{
+	display:block; /* simple: show nested items by default in Commit A */
+	padding-left:12px;
+	padding-bottom:8px;
+}
+.hmpro-mobile-nav ul.sub-menu a{
+	font-weight:500;
+	opacity:.92;
+}
+
+/* Body lock when drawer open */
+html.hmpro-mobile-drawer-open,
+html.hmpro-mobile-drawer-open body{
+	overflow:hidden;
+}
+
+/* Mobile breakpoint behavior */
+@media (max-width: 992px){
+	/* Hide desktop nav (we clone it into drawer) */
+	#site-header .hmpro-primary-nav{
+		display:none !important;
+	}
+	/* Mobile: hide desktop account CTA (drawer already has it) */
+	.hmpro-header-account-cta{
+		display:none !important;
+	}
+
+	/* Mobile: hide social icons/buttons in header (keep them in desktop only) */
+	#site-header .hmpro-social,
+	#site-header .hmpro-social-icons,
+	#site-header .hmpro-social-buttons,
+	#site-header .hmpro-social-icon,
+	#site-header .hmpro-social-icon-button,
+	#site-header .hmpro-social-wrap,
+	#site-header .hmpro-builder-comp.hmpro-comp-social_icon_button,
+	#site-header [data-comp="social_icon_button"]{
+		display:none !important;
+	}
+
+	/* Mobile: center the logo */
+	#site-header .hmpro-logo,
+	#site-header .hmpro-header-logo,
+	#site-header .site-logo,
+	#site-header .custom-logo-link,
+	#site-header .hmpro-builder-comp.hmpro-comp-logo,
+	#site-header [data-comp="logo"]{
+		display:flex;
+		justify-content:center;
+	}
+
+	/* If logo container is inside a flex row, force full width to center */
+	#site-header .hmpro-logo,
+	#site-header .hmpro-header-logo,
+	#site-header .hmpro-builder-comp.hmpro-comp-logo,
+	#site-header [data-comp="logo"]{
+		width:100%;
+	}
+	#site-header .hmpro-builder-comp.hmpro-comp-logo img,
+	#site-header [data-comp="logo"] img{
+		/* Mobile logo sizing comes from Customizer var */
+		max-height: var(--hmpro-logo-max-height-mobile, var(--hmpro-logo-max-height));
+		max-width: 240px;
+		height:auto;
+	}
+
+	/* Mobile hamburger position: keep it top-right but not overlapping search */
+	.hmpro-mobile-menu-toggle{
+		top:12px;
+		right:12px;
+	}
+
+	/* Mobile: hide search (drawer menu yeterliyse) */
+	#site-header .hmpro-search,
+	#site-header .hmpro-search-wrap,
+	#site-header .hmpro-header-search,
+	#site-header form.search-form,
+	#site-header .hmpro-builder-comp.hmpro-comp-search,
+	#site-header [data-comp="search"]{
+		display:none !important;
+	}
+
+	/* Add a bit of breathing room under logo if search is shown */
+	#site-header .hmpro-logo,
+	#site-header .hmpro-header-logo,
+	#site-header .custom-logo-link{
+		margin-top:6px;
+		margin-bottom:10px;
+	}
+	.hmpro-mobile-menu-toggle{
+		display:inline-flex;
+		align-items:center;
+		justify-content:center;
+	}
+}
+
+/* On larger screens, keep everything as-is; hamburger hidden */
+@media (min-width: 993px){
+	.hmpro-mobile-drawer{ display:none; }
+}
+
+/* === Google Translate Top Banner Safe Hide (HM) ===
+   Hides the injected Google Translate banner/toolbar without cancelling translation.
+   (Works with both old goog-te-banner-frame and newer VIpgJd-* containers.) */
+.goog-te-banner-frame,
+.goog-te-banner-frame.skiptranslate,
+.goog-te-balloon-frame,
+.goog-te-menu-frame,
+#goog-gt-tt,
+.goog-tooltip,
+.VIpgJd-ZVi9od-ORHb-OEVmcd,
+.VIpgJd-ZVi9od-ORHb,
+.VIpgJd-ZVi9od-aZ2wEe-wOHMyf,
+.VIpgJd-ZVi9od-aZ2wEe {
+	display: none !important;
+	visibility: hidden !important;
+	opacity: 0 !important;
+	pointer-events: none !important;
+}
+
+/* Google Translate sometimes pushes the page down via inline styles */
+html {
+	margin-top: 0 !important;
+}
+body {
+	top: 0 !important;
+	position: static !important;
+}
+/* =========================================================
+   Mobile: hide Header TOP region (Top Bar) completely
+   ========================================================= */
+@media (max-width: 767px) {
+	.hmpro-header-builder .hmpro-region-header_top {
+		display: none !important;
+	}
+}
+
+/* =========================================================
+   Mobile Drawer: builder region container styling
+   ========================================================= */
+.hmpro-mobile-drawer-builder {
+	padding: 12px 14px;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.hmpro-mobile-drawer-builder .hmpro-builder-region {
+	margin: 0;
+}
+
+
+/* Accessibility: touch targets (mobile)
+   Ensure tappable elements meet minimum 48x48px without changing desktop layout. */
+@media (max-width: 992px){
+	.hmpro-mobile-drawer-close{
+		width:48px;
+		height:48px;
+	}
+	.hmpro-mobile-account-cta{
+		min-height:48px;
+		padding:12px 14px;
+	}
+	.hmpro-mobile-account-menu__item{
+		min-height:56px;
+		padding:16px 16px;
+	}
+	.hmpro-mobile-account-menu__label{
+		font-size:17px;
+	}
+	.hmpro-mobile-account-menu__value{
+		font-size:15px;
+	}
+	.hmpro-mobile-nav a{
+		min-height:48px;
+		padding:14px 10px;
+	}
+	/* Common pagination / small controls inside content */
+	.hmpro-blog-grid__pagination a,
+	.woocommerce-pagination a,
+	.woocommerce-pagination span,
+	nav.pagination a,
+	nav.pagination span{
+		min-height:48px;
+		min-width:48px;
+		padding:12px 14px;
+		display:inline-flex;
+		align-items:center;
+		justify-content:center;
+	}
+}
+
+
+/* Drawer visibility control */
+.hmpro-mobile-drawer{
+  visibility: hidden;
+}
+
+.hmpro-mobile-drawer.is-open{
+  visibility: visible;
+}
+
+html.hmpro-lock-scroll,
+html.hmpro-lock-scroll body{
+  overflow: hidden;
+}
+
+
+/* Drawer visibility control (lite inline drawer) */
+.hmpro-mobile-drawer{ visibility: hidden; }
+.hmpro-mobile-drawer.is-open{ visibility: visible; }
+
+html.hmpro-lock-scroll,
+html.hmpro-lock-scroll body{ overflow: hidden; }

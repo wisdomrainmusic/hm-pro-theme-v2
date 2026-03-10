@@ -1,0 +1,165 @@
+/* Footer layout polish (taller + tighter columns) */
+/* These selectors are intentionally conservative: they only affect the footer builder output wrapper. */
+.hmpro-site-footer,
+.hmpro-footer,
+footer.site-footer {
+	padding-top: 46px;
+	padding-bottom: 46px;
+}
+
+/* If footer uses a flex/grid inner wrapper, reduce gaps to bring menus closer */
+.hmpro-site-footer .hmpro-footer-inner,
+.hmpro-footer .hmpro-footer-inner,
+footer.site-footer .hmpro-footer-inner {
+	column-gap: 60px;
+	row-gap: 18px;
+}
+
+/* Footer Menu widget (restore old “footer-like” vertical behavior) */
+.hmpro-footer-nav .hmpro-footer-menu {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	align-items: flex-start;
+}
+.hmpro-footer-nav .hmpro-footer-menu li {
+	margin: 0;
+	padding: 0;
+}
+.hmpro-footer-nav .hmpro-footer-menu a {
+	text-decoration: none;
+}
+
+/* Dedicated Footer Menu widget (legacy) */
+.hmpro-footer-menu-widget {
+	display: block;
+}
+.hmpro-footer-menu-title {
+	font-weight: 600;
+	margin: 0 0 10px 0;
+}
+.hmpro-footer-menu-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	align-items: flex-start;
+}
+.hmpro-footer-menu-list li {
+	margin: 0;
+	padding: 0;
+}
+.hmpro-footer-menu-list a {
+	text-decoration: none;
+}
+
+/* Footer Info widget styles */
+.hmpro-footer-info-title {
+	font-weight: 600;
+	margin: 0 0 10px 0;
+}
+.hmpro-footer-info-lines {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+.hmpro-footer-info-line {
+	opacity: 0.95;
+}
+
+/* Footer */
+footer,
+.site-footer {
+	background-color: var(--hm-footer);
+	color: #fff;
+}
+
+/* Builder Frontend Base (Commit 018) */
+.hmpro-footer-builder{
+	width:100%;
+}
+
+/* Footer Builder layout: tighter, column-based like a classic site footer */
+.hmpro-footer-builder{
+	padding: 0 24px;
+}
+
+.hmpro-footer-builder .hmpro-builder-region{
+	max-width: 1100px;
+	margin: 0 auto;
+}
+
+/* Footer rows should not use header spacing rules */
+.hmpro-footer-builder .hmpro-builder-row{
+	justify-content: flex-start;
+	align-items: flex-start;
+	gap: 56px;
+	padding: 56px 0;
+}
+
+/* Footer columns stack components vertically */
+.hmpro-footer-builder .hmpro-builder-col{
+	flex: 0 1 auto;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: flex-start;
+	gap: 14px;
+	min-width: 220px;
+}
+
+/* Keep the first (logo/info) column a bit wider when needed */
+.hmpro-footer-builder .hmpro-builder-col:first-child{
+	min-width: 260px;
+}
+
+/* Allow footer logo to be controlled separately via Customizer. */
+.hmpro-footer-builder .hmpro-logo img,
+.hmpro-footer-builder .hmpro-logo img.custom-logo,
+.hmpro-footer-builder .hmpro-logo .custom-logo,
+.hmpro-footer-builder .hmpro-logo .custom-logo-link img{
+  max-height: var(--hmpro-footer-logo-max-height);
+}
+
+/* Keep footer logo within its column when logo size is increased */
+.hmpro-footer-builder .hmpro-logo-wrap{
+	max-width: 100%;
+	overflow: hidden;
+	display:flex;
+	align-items:center;
+}
+.hmpro-footer-builder .hmpro-logo-wrap .hmpro-logo{
+	max-width: 100%;
+	display:block;
+}
+.hmpro-footer-builder .hmpro-logo-wrap .hmpro-logo img{
+	max-width:100%;
+}
+
+@media (max-width: 768px){
+	.hmpro-footer-builder .hmpro-builder-row{
+		flex-direction: column;
+		gap: 28px;
+		padding: 36px 0;
+	}
+	.hmpro-footer-builder .hmpro-builder-col{
+		min-width: 0;
+		width: 100%;
+	}
+}
+
+/* Footer Builder: Footer Image component (logos / payment icons / trust badges) */
+.hmpro-footer-builder .hmpro-footer-image{
+	display:inline-block;
+	line-height:0;
+}
+.hmpro-footer-builder .hmpro-footer-image__img{
+	display:block;
+	width:100%;
+	height:auto;
+	object-fit:contain;
+}

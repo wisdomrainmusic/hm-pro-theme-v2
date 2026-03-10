@@ -1,0 +1,31 @@
+/* Astra-like eye toggle near the Title field (classic editor) */
+
+#titlewrap{ position:relative; }
+
+.hmpro-hide-title-eye{
+	position:absolute;
+	left:0;
+	top:0;
+	width:44px;
+	height:44px;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	border:1px solid #c3c4c7;
+	background:#f6f7f7;
+	border-radius:2px;
+	cursor:pointer;
+	padding:0;
+}
+
+.hmpro-hide-title-eye svg{
+	width:18px;
+	height:18px;
+	fill:#1d2327;
+	opacity:.75;
+}
+
+.hmpro-hide-title-eye.is-hidden svg{ opacity:1; }
+
+/* Make room so the icon doesn't overlap the title input */
+#title{ padding-left:56px !important; }

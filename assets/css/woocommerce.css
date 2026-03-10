@@ -1,0 +1,606 @@
+/* Prices */
+.woocommerce div.product p.price,
+.woocommerce div.product span.price,
+.woocommerce ul.products li.product .price {
+	color: var(--hm-primary);
+}
+
+/* Checkout "Place Order" button - inherit theme colors */
+.woocommerce-checkout #place_order,
+.woocommerce-checkout button#place_order.button.alt {
+	background-color: var(--e-global-color-primary);
+	color: #ffffff;
+	border: none;
+	border-radius: 6px;
+	padding: 14px 28px;
+	font-weight: 600;
+	font-size: 15px;
+	transition: all 0.25s ease;
+}
+
+.woocommerce-checkout #place_order:hover,
+.woocommerce-checkout button#place_order.button.alt:hover {
+	background-color: var(--e-global-color-accent);
+	color: #ffffff;
+}
+
+.woocommerce-checkout #place_order:disabled {
+	opacity: 0.6;
+	cursor: not-allowed;
+}
+
+/* Checkout info boxes - unified color tone (coupon + payment boxes) */
+.woocommerce-checkout .woocommerce-form-coupon-toggle,
+.woocommerce-checkout .woocommerce-info,
+.woocommerce-checkout .payment_box {
+	background-color: rgba(20, 91, 83, 0.08);
+	border-left: 4px solid var(--e-global-color-primary);
+	color: var(--e-global-color-text);
+	border-radius: 6px;
+}
+
+.woocommerce-checkout .woocommerce-info a {
+	color: var(--e-global-color-primary);
+	font-weight: 500;
+}
+
+.woocommerce-checkout .payment_box::before {
+	border-bottom-color: rgba(20, 91, 83, 0.08);
+}
+
+/* Sale badge */
+.woocommerce span.onsale {
+	background-color: var(--hm-primary);
+	color: #fff;
+}
+
+/* Add to cart */
+.woocommerce a.button,
+.woocommerce button.button,
+.woocommerce input.button {
+	background-color: var(--hm-primary);
+	border-color: var(--hm-primary);
+	color: #fff;
+}
+
+.woocommerce a.button:hover,
+.woocommerce button.button:hover,
+.woocommerce input.button:hover {
+	background-color: var(--hm-dark);
+	border-color: var(--hm-dark);
+}
+
+/* Notices */
+.woocommerce-message {
+	border-left-color: var(--hm-primary);
+}
+
+/*
+ * HM Pro - Shop sidebar rendering
+ *
+ * We provide a dedicated "Shop Sidebar" widget area (sidebar-shop.php).
+ * For WooCommerce product archives (shop, category, tag), we render that sidebar
+ * on the LEFT like Astra-style layouts.
+ */
+
+/* Layout wrapper for product archives (shop/category/tag). */
+.woocommerce-page.post-type-archive-product .hmpro-woo-archive-layout,
+.woocommerce-page.tax-product_cat .hmpro-woo-archive-layout,
+.woocommerce-page.tax-product_tag .hmpro-woo-archive-layout {
+	max-width: 1200px;
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 16px;
+	padding-right: 16px;
+}
+
+/* Reset padding/margins so the wrapper controls spacing. */
+.woocommerce-page.post-type-archive-product #primary,
+.woocommerce-page.tax-product_cat #primary,
+.woocommerce-page.tax-product_tag #primary {
+	max-width: none;
+	margin: 0;
+	padding: 0;
+}
+
+.woocommerce-page.post-type-archive-product .hmpro-shop-sidebar,
+.woocommerce-page.tax-product_cat .hmpro-shop-sidebar,
+.woocommerce-page.tax-product_tag .hmpro-shop-sidebar {
+	padding: 0;
+}
+
+@media (min-width: 992px) {
+	/*
+	 * Use inline-block instead of floats.
+	 * Floats can "bleed" into full-width page sections and visually look like
+	 * the sidebar is inside the footer (especially when pages use wide cover blocks).
+	 * Inline-block keeps everything in normal document flow so the footer always
+	 * stays below the shop layout.
+	 */
+	.woocommerce-page.post-type-archive-product #primary,
+	.woocommerce-page.tax-product_cat #primary,
+	.woocommerce-page.tax-product_tag #primary {
+		display: inline-block;
+		vertical-align: top;
+		width: calc(100% - 340px);
+		padding-left: 24px;
+		box-sizing: border-box;
+	}
+	.woocommerce-page.post-type-archive-product .hmpro-shop-sidebar,
+	.woocommerce-page.tax-product_cat .hmpro-shop-sidebar,
+	.woocommerce-page.tax-product_tag .hmpro-shop-sidebar {
+		display: inline-block;
+		vertical-align: top;
+		width: 320px;
+		padding-right: 24px;
+		box-sizing: border-box;
+	}
+}
+
+.hmpro-sidebar .widget {
+	margin-bottom: 18px;
+}
+
+.hmpro-sidebar .widget-title {
+	margin: 0 0 10px;
+	font-weight: 700;
+}
+
+/*
+ * Single Product: gallery sizing + modern layout defaults
+ *
+ * The goal is to keep product media consistent (avoid giant portrait images)
+ * while still remaining responsive.
+ */
+.single-product.woocommerce div.product {
+	max-width: 1200px;
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 16px;
+	padding-right: 16px;
+}
+
+/* Constrain the gallery column so images don't take over the viewport. */
+.single-product.woocommerce div.product div.images {
+	max-width: 560px;
+}
+
+/* Prevent any zoom/absolute overlay image from visually exploding outside the gallery box */
+.single-product.woocommerce div.product div.images .woocommerce-product-gallery,
+.single-product.woocommerce div.product div.images .woocommerce-product-gallery__wrapper,
+.single-product.woocommerce div.product div.images .woocommerce-product-gallery__image {
+	overflow: hidden;
+}
+
+/* If any zoom image still gets injected by a plugin, clamp it */
+.single-product.woocommerce div.product div.images img.zoomImg {
+	max-width: 100% !important;
+	max-height: 100% !important;
+}
+
+/* =========================================================
+   Product media standard (2:3 canvas like 1200x1800)
+   - Shop/category cards + single gallery
+   - White canvas + center contain (no crop)
+   ========================================================= */
+
+/* Archive: apply ratio to our dedicated canvas wrapper (NOT the product link) */
+.hmpro-product-thumb-canvas {
+	aspect-ratio: 2 / 3;
+	background: #fff;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.hmpro-product-thumb-canvas img {
+	width: 100%;
+	height: 100%;
+	max-width: 100%;
+	max-height: 100%;
+	object-fit: contain;
+	object-position: center;
+	display: block;
+	background: #fff;
+}
+
+/* Single product: enforce stable gallery ratio and prevent CLS */
+.single-product.woocommerce div.product div.images .woocommerce-product-gallery {
+	background: #fff;
+	aspect-ratio: 2 / 3;
+	overflow: hidden;
+	/* Prevent excessive height on wide layouts */
+	max-height: 900px;
+	width: 100%;
+	margin: 0 auto;
+}
+
+.single-product.woocommerce div.product div.images .woocommerce-product-gallery__wrapper {
+	background: #fff;
+	height: 100%;
+	overflow: hidden;
+	max-height: 900px;
+}
+
+/* FlexSlider wraps the wrapper; put the ratio stability on the viewport too */
+.single-product.woocommerce div.product div.images .flex-viewport {
+	height: 100% !important;
+	background: #fff;
+	overflow: hidden;
+	max-height: 900px;
+}
+
+.single-product.woocommerce div.product div.images .woocommerce-product-gallery__image,
+.single-product.woocommerce div.product div.images .woocommerce-product-gallery__image a {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.single-product.woocommerce div.product div.images .woocommerce-product-gallery__wrapper,
+.single-product.woocommerce div.product div.images .woocommerce-product-gallery__image,
+.single-product.woocommerce div.product div.images .woocommerce-product-gallery__image a {
+	height: 100%;
+}
+
+/* Override previous crop rule: use contain + full height within ratio box */
+.single-product.woocommerce div.product div.images .woocommerce-product-gallery__wrapper img {
+	width: 100%;
+	height: 100%;
+	max-height: none;
+	object-fit: contain;
+	object-position: center;
+	display: block;
+	background: #fff;
+}
+
+/* If FlexSlider is not initialized yet (no viewport), keep wrapper stable */
+.single-product.woocommerce div.product div.images .woocommerce-product-gallery:not(.flexslider) .woocommerce-product-gallery__wrapper {
+	aspect-ratio: 2 / 3;
+}
+
+/* Hide the zoom/lightbox trigger icon/button entirely */
+.single-product.woocommerce div.product div.images .woocommerce-product-gallery__trigger {
+	display: none !important;
+}
+
+/* Thumbnail area: make it a neat framed grid (no float collapse / "ezik" look) */
+.single-product.woocommerce div.product div.images .flex-control-thumbs {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 10px;
+	padding: 12px;
+	margin: 14px 0 0;
+	background: #fff;
+	border: 1px solid rgba(0, 0, 0, 0.08);
+	border-radius: 14px;
+}
+
+.single-product.woocommerce div.product div.images .flex-control-thumbs li {
+	float: none !important;
+	width: auto !important;
+	margin: 0 !important;
+}
+
+/* Thumbnails: consistent strip sizing for the slider/carousel. */
+.single-product.woocommerce div.product div.images .flex-control-thumbs li img {
+	width: 100%;
+	height: 80px;
+	object-fit: cover;
+	border-radius: 10px;
+	display: block;
+	opacity: 0.8;
+	transition: opacity 150ms ease;
+}
+
+.single-product.woocommerce div.product div.images .flex-control-thumbs li img:hover,
+.single-product.woocommerce div.product div.images .flex-control-thumbs li img.flex-active {
+	opacity: 1;
+}
+
+/* FlexSlider arrows (single product gallery) */
+.single-product.woocommerce div.product div.images .flex-direction-nav a {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	z-index: 10;
+	width: 38px;
+	height: 38px;
+	line-height: 38px;
+	text-align: center;
+	border-radius: 999px;
+	background: rgba(0, 0, 0, 0.55);
+	color: #fff;
+	text-decoration: none;
+	opacity: 0.85;
+	font-size: 0;
+	box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+}
+
+.single-product.woocommerce div.product div.images:hover .flex-direction-nav a {
+	opacity: 1;
+}
+
+.single-product.woocommerce div.product div.images .flex-direction-nav a:before {
+	font-size: 22px;
+	line-height: 38px;
+	display: block;
+}
+
+.single-product.woocommerce div.product div.images .flex-direction-nav a.flex-prev:before {
+	content: '‹';
+}
+
+.single-product.woocommerce div.product div.images .flex-direction-nav a.flex-next:before {
+	content: '›';
+}
+
+.single-product.woocommerce div.product div.images .flex-direction-nav .flex-prev {
+	left: 12px;
+}
+
+.single-product.woocommerce div.product div.images .flex-direction-nav .flex-next {
+	right: 12px;
+}
+
+@media (max-width: 768px) {
+	.single-product.woocommerce div.product div.images {
+		max-width: none;
+	}
+	.single-product.woocommerce div.product div.images .flex-control-thumbs {
+		grid-template-columns: repeat(3, 1fr);
+	}
+	.single-product.woocommerce div.product div.images .woocommerce-product-gallery__wrapper img {
+		max-height: 420px;
+	}
+}
+
+/* Remove FlexSlider pagination dots (black dots under gallery) */
+.single-product.woocommerce div.product div.images .flex-control-nav {
+	display: none !important;
+}
+
+/* Remove FlexSlider list bullets (the two black dots under gallery) */
+.single-product.woocommerce div.product div.images ul.flex-direction-nav,
+.single-product.woocommerce div.product div.images ol.flex-control-nav {
+	list-style: none !important;
+	margin: 0 !important;
+	padding: 0 !important;
+}
+
+.single-product.woocommerce div.product div.images ul.flex-direction-nav li,
+.single-product.woocommerce div.product div.images ol.flex-control-nav li {
+	list-style: none !important;
+}
+
+/* =========================================================
+ * Checkout Layout (Astra-style)
+ * - Left: customer details (billing + notes)
+ * - Right: order review
+ * - Move "Ship to different address" section lower
+ * ========================================================= */
+
+.woocommerce-checkout form.checkout {
+	width: 100%;
+}
+
+/* Desktop two-column layout */
+@media (min-width: 992px) {
+	.woocommerce-checkout form.checkout {
+		/*
+		 * Use an explicit two-area grid so the right sidebar can stay
+		 * locked to the top (Astra-like) even when the left column grows.
+		 */
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) 420px;
+		grid-template-areas: "details review";
+		column-gap: 48px;
+		row-gap: 28px;
+		align-items: start;
+	}
+
+	/* Left column */
+	.woocommerce-checkout #customer_details {
+		grid-area: details;
+		min-width: 0;
+	}
+
+	/* Right column */
+	.woocommerce-checkout #order_review,
+	.woocommerce-checkout #order_review_heading {
+		grid-area: review;
+	}
+
+	/* Force order review to start from top (Astra-like) */
+	.woocommerce-checkout #order_review {
+		/* Ensure the summary starts at the top and remains visible on scroll */
+		align-self: start;
+		margin-top: 0 !important;
+		padding-top: 0;
+		position: sticky;
+		/* leave room for WP admin bar / sticky headers */
+		top: 110px;
+		z-index: 2;
+		clear: none !important;
+	}
+
+	/* Fallback: some Woo setups wrap the review in this class */
+	.woocommerce-checkout .woocommerce-checkout-review-order {
+		position: sticky;
+		/* leave room for WP admin bar / sticky headers */
+		top: 110px;
+		align-self: start;
+		z-index: 2;
+	}
+
+	/* Woo prints heading in DOM later; hide it and render a heading inside the card */
+	.woocommerce-checkout #order_review_heading {
+		display: none !important;
+	}
+
+	.woocommerce-checkout #order_review::before {
+		content: "Siparişiniz";
+		display: block;
+		font-weight: 700;
+		font-size: 22px;
+		line-height: 1.2;
+		margin: 0 0 14px 0;
+	}
+}
+
+/* Ensure customer_details can be re-ordered */
+.woocommerce-checkout #customer_details {
+	display: flex;
+	flex-direction: column;
+	gap: 18px;
+}
+
+/* Default blocks in classic checkout */
+.woocommerce-checkout #customer_details .col-1,
+.woocommerce-checkout #customer_details .col-2 {
+	width: 100%;
+	float: none;
+}
+
+/* Re-order sections to push shipping toggle lower (Astra-like) */
+.woocommerce-checkout .woocommerce-billing-fields {
+	order: 1;
+}
+
+.woocommerce-checkout .woocommerce-additional-fields {
+	order: 2;
+}
+
+.woocommerce-checkout .woocommerce-shipping-fields {
+	order: 3;
+}
+
+/* Shipping fields: keep the accordion/checkbox at top of its own section */
+.woocommerce-checkout .woocommerce-shipping-fields {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+/* If your accordion class exists, keep its spacing consistent */
+.woocommerce-checkout #ship-to-different-address.hmpro-ship-accordion {
+	margin-top: 0;
+}
+
+/* Improve spacing under the shipping toggle area */
+.woocommerce-checkout .woocommerce-shipping-fields .shipping_address {
+	margin-top: 10px;
+}
+
+/* On desktop, remove Woo's legacy floats/margins that can break the grid */
+@media (min-width: 992px) {
+	.woocommerce-checkout .col2-set,
+	.woocommerce-checkout .col2-set .col-1,
+	.woocommerce-checkout .col2-set .col-2 {
+		float: none !important;
+		width: auto !important;
+	}
+}
+
+/* =========================================================
+ * Checkout: "Ship to a different address?" as accordion
+ * ========================================================= */
+.woocommerce-checkout #ship-to-different-address.hmpro-ship-accordion {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 14px 16px;
+	border: 1px solid rgba(0,0,0,0.10);
+	border-radius: 14px;
+	background: #fff;
+	margin: 18px 0 10px;
+}
+
+.woocommerce-checkout #ship-to-different-address.hmpro-ship-accordion label {
+	margin: 0;
+	font-weight: 700;
+}
+
+.woocommerce-checkout #ship-to-different-address.hmpro-ship-accordion:after {
+	content: '▾';
+	margin-left: auto;
+	opacity: 0.7;
+	transition: transform 160ms ease;
+}
+
+.woocommerce-checkout #ship-to-different-address.hmpro-ship-accordion.is-open:after {
+	transform: rotate(180deg);
+}
+
+/* Panel */
+.woocommerce-checkout .shipping_address.hmpro-ship-panel {
+	padding: 16px;
+	border: 1px solid rgba(0,0,0,0.08);
+	border-radius: 14px;
+	background: #fff;
+	margin: 10px 0 18px;
+}
+
+/* === HM PVI / Lightbox stacking fix ===
+   Header + mega menu use very high z-index values, causing video lightbox close button
+   to render behind them. Force common lightbox containers + close buttons above the UI.
+*/
+.mfp-bg,
+.mfp-wrap,
+.fancybox-container,
+.pswp,
+.elementor-lightbox,
+.lg-backdrop,
+.lg-outer {
+	z-index: 1000000 !important;
+}
+
+.mfp-close,
+.fancybox-button--close,
+.pswp__button--close,
+.lg-close,
+.elementor-lightbox .dialog-close-button {
+	z-index: 1000001 !important;
+	position: fixed !important;
+	top: 12px !important;
+	right: 12px !important;
+	pointer-events: auto !important;
+}
+
+/* HM PVI: Magnific Popup iframe sizing + close button reliability */
+.mfp-wrap, .mfp-container { pointer-events: auto !important; }
+
+.mfp-close{
+	display:block !important;
+	opacity:1 !important;
+	pointer-events:auto !important;
+	position:fixed !important;
+	top: calc(12px + env(safe-area-inset-top, 0px)) !important;
+	right: calc(12px + env(safe-area-inset-right, 0px)) !important;
+	z-index: 1000002 !important;
+}
+
+.mfp-iframe-holder .mfp-content{
+	max-width: 96vw !important;
+}
+
+@media (max-width: 768px){
+	.mfp-iframe-holder .mfp-content{
+		width: 96vw !important;
+		height: 86vh !important;
+	}
+	.mfp-iframe-holder .mfp-iframe-scaler{
+		width: 96vw !important;
+		height: 86vh !important;
+		max-width: 96vw !important;
+		max-height: 86vh !important;
+		padding-top: 0 !important;
+	}
+	.mfp-iframe-holder .mfp-iframe-scaler iframe{
+		width: 100% !important;
+		height: 100% !important;
+	}
+}

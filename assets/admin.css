@@ -1,0 +1,61 @@
+.hmpro-palette {
+	display: flex;
+	gap: 6px;
+}
+
+.hmpro-palette span {
+	width: 14px;
+	height: 14px;
+	border-radius: 50%;
+	display: inline-block;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.hmpro-badge-active {
+	display: inline-block;
+	padding: 4px 10px;
+	background: #2271b1;
+	color: #fff;
+	border-radius: 4px;
+	font-size: 12px;
+	font-weight: 600;
+}
+
+.button-danger {
+	color: #b32d2e;
+	border-color: #b32d2e;
+}
+
+.button-danger:hover {
+	background: #b32d2e;
+	color: #fff;
+}
+
+.hmpro-typo-btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+	padding: 8px 12px;
+}
+
+.hmpro-typo-aa {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 34px;
+	height: 30px;
+	border-radius: 8px;
+	border: 1px solid rgba(0, 0, 0, 0.12);
+	background: #fff;
+	font-size: 16px;
+	font-weight: 700;
+	line-height: 1;
+}
+
+.hmpro-typo-label {
+	font-weight: 600;
+}
+
+.hmpro-typo-meta {
+	opacity: 0.7;
+}
