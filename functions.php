@@ -247,7 +247,7 @@ add_action( 'wp_enqueue_scripts', function () {
 	 * - Mega menu assets: only when a Primary menu is assigned (filterable).
 	 * - Mobile header JS: only when a mobile menu exists OR header builder layout is present (filterable).
 	 */
-	$should_enqueue_mega = has_nav_menu( 'primary' );
+	$should_enqueue_mega = has_nav_menu( 'primary' ) || has_nav_menu( 'hm_primary' ) || has_nav_menu( 'topbar' );
 	$should_enqueue_mega = (bool) apply_filters( 'hmpro/should_enqueue_mega_menu_assets', $should_enqueue_mega );
 	if ( $should_enqueue_mega ) {
 		wp_enqueue_style(
@@ -270,7 +270,11 @@ add_action( 'wp_enqueue_scripts', function () {
 	 * Ensure mobile header drawer JS always loads when needed.
 	 * This fixes hamburger menu not opening on some installs.
 	 */
-	$should_enqueue_mobile_header = has_nav_menu( 'mobile_menu' ) || has_nav_menu( 'primary' );
+	$should_enqueue_mobile_header =
+		has_nav_menu( 'mobile_menu' ) ||
+		has_nav_menu( 'primary' ) ||
+		has_nav_menu( 'hm_primary' ) ||
+		has_nav_menu( 'topbar' );
 	if ( ! $should_enqueue_mobile_header && function_exists( 'hmpro_has_builder_layout' ) ) {
 		$should_enqueue_mobile_header = (bool) hmpro_has_builder_layout( 'header' );
 	}

@@ -202,21 +202,47 @@ function hmpro_icon_close() {
 			</div>
 			<nav class="hmpro-mobile-nav" aria-label="<?php echo esc_attr__( 'Mobil Menü', 'hm-pro-theme' ); ?>">
 				<?php
-				// Prefer "Mobil Menü" location. Fallback to Primary if not assigned.
-				if ( has_nav_menu( 'mobile_menu' ) ) {
+				/*
+				 * Prefer explicit mobile menu first, then fall back to other known
+				 * theme locations used by old/new HM Pro installs.
+				 */
+				$hmpro_mobile_menu_location = '';
+				$hmpro_mobile_menu_candidates = [
+					'mobile_menu',
+					'primary',
+					'hm_primary',
+					'topbar',
+				];
+
+				foreach ( $hmpro_mobile_menu_candidates as $hmpro_menu_location ) {
+					if ( has_nav_menu( $hmpro_menu_location ) ) {
+						$hmpro_mobile_menu_location = $hmpro_menu_location;
+						break;
+					}
+				}
+
+				if ( $hmpro_mobile_menu_location ) {
 					wp_nav_menu( [
-						'theme_location' => 'mobile_menu',
+						'theme_location' => $hmpro_mobile_menu_location,
 						'container'      => false,
 						'menu_class'     => 'hmpro-mobile-menu',
 						'depth'          => 3,
 					] );
-				} elseif ( has_nav_menu( 'primary' ) ) {
-					wp_nav_menu( [
-						'theme_location' => 'primary',
-						'container'      => false,
-						'menu_class'     => 'hmpro-mobile-menu',
-						'depth'          => 3,
-					] );
+				} else {
+					/*
+					 * Last resort fallback:
+					 * render the first existing menu so drawer never looks empty
+					 * on fresh repo / reassigned menu-location installs.
+					 */
+					$hmpro_fallback_menus = wp_get_nav_menus();
+					if ( ! empty( $hmpro_fallback_menus ) && ! is_wp_error( $hmpro_fallback_menus ) ) {
+						wp_nav_menu( [
+							'menu'       => $hmpro_fallback_menus[0]->term_id,
+							'container'  => false,
+							'menu_class' => 'hmpro-mobile-menu',
+							'depth'      => 3,
+						] );
+					}
 				}
 				?>
 			</nav>
