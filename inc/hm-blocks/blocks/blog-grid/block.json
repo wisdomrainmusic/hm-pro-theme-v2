@@ -1,0 +1,49 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "hmpro/blog-grid",
+  "title": "HM Blog Grid",
+  "category": "hmpro",
+  "icon": "grid-view",
+  "description": "Blog posts grid (theme-native, export/import friendly).",
+  "supports": {
+    "align": ["wide", "full"],
+    "anchor": true
+  },
+  "attributes": {
+    "postsPerPage": { "type": "number", "default": 9 },
+    "orderby": { "type": "string", "default": "date" },
+    "order": { "type": "string", "default": "DESC" },
+    "category": { "type": "number", "default": 0 },
+
+    "columnsDesktop": { "type": "number", "default": 3 },
+    "columnsTablet": { "type": "number", "default": 2 },
+    "columnsMobile": { "type": "number", "default": 1 },
+    "gap": { "type": "number", "default": 24 },
+
+    "showImage": { "type": "boolean", "default": true },
+    "imageRatio": { "type": "string", "default": "16:9" },
+    "showExcerpt": { "type": "boolean", "default": true },
+    "excerptLength": { "type": "number", "default": 24 },
+    "showMeta": { "type": "boolean", "default": true },
+    "metaStyle": { "type": "string", "default": "date" },
+
+    "cardStyle": { "type": "string", "default": "soft" },
+    "buttonLabel": { "type": "string", "default": "Read more" },
+
+    "enableCategoryTabs": { "type": "boolean", "default": false },
+    "tabsPosition": { "type": "string", "default": "top" },
+    "tabsSource": { "type": "string", "default": "all" },
+    "selectedCategories": { "type": "array", "default": [] },
+    "allTabLabel": { "type": "string", "default": "All" },
+
+    "enablePagination": { "type": "boolean", "default": true },
+    "paginationType": { "type": "string", "default": "numbers" },
+    "paginationPrevLabel": { "type": "string", "default": "Prev" },
+    "paginationNextLabel": { "type": "string", "default": "Next" }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "style": "file:./style.css",
+  "render": "file:./render.php"
+}

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "hmpro/hm-campaign-bar",
+  "title": "HM Campaign Bar",
+  "category": "hmpro",
+  "icon": "megaphone",
+  "description": "Campaign/notice bar with optional marquee scrolling.",
+  "supports": {
+    "align": ["wide", "full"],
+    "anchor": true
+  },
+  "attributes": {
+    "text": { "type": "string", "default": "✨ Big Winter Sale – Up to 40% OFF!" },
+    "linkUrl": { "type": "string", "default": "" },
+    "openInNewTab": { "type": "boolean", "default": false },
+    "nofollow": { "type": "boolean", "default": false },
+    "textMode": { "type": "string", "default": "static" },
+    "marqueeSpeed": { "type": "number", "default": 18 },
+    "marqueeGap": { "type": "number", "default": 48 },
+    "fullWidth": { "type": "boolean", "default": false },
+    "height": { "type": "number", "default": 56 },
+    "paddingX": { "type": "number", "default": 18 },
+    "borderRadius": { "type": "number", "default": 10 },
+    "bgColor": { "type": "string", "default": "#000000" },
+    "textColor": { "type": "string", "default": "#ffffff" }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "style": "file:./style.css",
+  "render": "file:./render.php"
+}

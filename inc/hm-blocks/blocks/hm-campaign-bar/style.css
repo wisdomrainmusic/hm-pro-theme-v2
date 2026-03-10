@@ -1,0 +1,82 @@
+.hmpro-cb {
+  --hm-cb-text: #ffffff;
+  --hm-cb-bg: #000000;
+  --hm-cb-gap: 48px;
+  --hm-cb-speed: 18s;
+  --hm-cb-h: 56px;
+  --hm-cb-padx: 18px;
+  --hm-cb-radius: 10px;
+  position: relative;
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  background: var(--hm-cb-bg);
+  color: var(--hm-cb-text);
+  border-radius: var(--hm-cb-radius);
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.hmpro-cb__link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  height: 100%;
+  width: 100%;
+}
+
+.hmpro-cb__inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: var(--hm-cb-h);
+  min-height: var(--hm-cb-h);
+  box-sizing: border-box;
+  padding: 0 var(--hm-cb-padx);
+  gap: var(--hm-cb-gap);
+}
+
+.hmpro-cb__text {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--hm-cb-text);
+  white-space: nowrap;
+}
+
+.hmpro-cb__marquee {
+  overflow: hidden;
+  width: 100%;
+  white-space: nowrap;
+}
+
+.hmpro-cb__marqueeContent {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--hm-cb-gap);
+  animation: hmpro-cb-marquee var(--hm-cb-speed) linear infinite;
+  min-width: 200%;
+  will-change: transform;
+}
+
+@keyframes hmpro-cb-marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hmpro-cb__marqueeContent { animation: none; }
+}
+
+.hmpro-cb.is-fullwidth {
+  position: relative;
+  width: 100vw;
+  left: 50%;
+  margin-left: -50vw;
+  max-width: 100vw;
+}
+
+.hmpro-cb.has-link:hover {
+  cursor: pointer;
+}

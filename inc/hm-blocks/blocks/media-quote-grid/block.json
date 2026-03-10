@@ -1,0 +1,45 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "hmpro/media-quote-grid",
+  "title": "HM Media Quote Grid",
+  "category": "hmpro",
+  "icon": "format-image",
+  "description": "Preset-based grid of cards with side media and quote (hybrid render).",
+  "supports": {
+    "align": [
+      "wide",
+      "full"
+    ],
+    "anchor": true
+  },
+  "attributes": {
+    "preset": {
+      "type": "string",
+      "default": "two_equal"
+    },
+    "gridGap": {
+      "type": "number",
+      "default": 20
+    },
+    "cardRadius": {
+      "type": "number",
+      "default": 18
+    },
+    "cardPadding": {
+      "type": "number",
+      "default": 22
+    },
+    "tiles": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "object"
+      }
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "style": "file:./style.css",
+  "render": "file:./render.php"
+}

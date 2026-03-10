@@ -1,0 +1,295 @@
+/*
+ * HM Hero Slider (v2 rebuild)
+ *
+ * Goals:
+ * - Remove fragile full-bleed breakout that behaved differently across browsers/caches.
+ * - Keep ALL existing block attributes + markup hooks so existing pages keep working.
+ * - Provide a deterministic layout:
+ *   - The layout width is always "boxed" (max width via --hmpro-hero-maxw).
+ *   - A dedicated internal "bleed" layer is used to render full-viewport backgrounds
+ *     without affecting document layout width.
+ */
+
+/* Per-device background selection via CSS vars:
+   --hmpro-hero-bg-d (desktop), --hmpro-hero-bg-t (tablet), --hmpro-hero-bg-m (mobile)
+*/
+.hmpro-hero-slide{ --hmpro-hero-bg: var(--hmpro-hero-bg-d); }
+@media (max-width: 1024px){
+  .hmpro-hero-slide{ --hmpro-hero-bg: var(--hmpro-hero-bg-t, var(--hmpro-hero-bg-d)); }
+}
+@media (max-width: 767px){
+  .hmpro-hero-slide{ --hmpro-hero-bg: var(--hmpro-hero-bg-m, var(--hmpro-hero-bg-t, var(--hmpro-hero-bg-d))); }
+}
+
+.hmpro-hero-slider{
+  position: relative;
+  width: 100%;
+  overflow-x: clip;
+}
+
+/*
+ * Full-width breakout (hero mode)
+ *
+ * The theme does not ship global .alignfull styles, so relying on Gutenberg's
+ * alignment support is not enough to achieve a true viewport-width hero.
+ *
+ * When fullWidth is enabled we break the entire block out to the viewport width
+ * (using dvw when available to avoid scrollbar-induced overflow), while keeping
+ * the internal max-width variable for the content group.
+ */
+.hmpro-hero-slider.is-fullwidth{
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
+
+@supports (width: 100dvw){
+  .hmpro-hero-slider.is-fullwidth{
+    width: 100dvw;
+    max-width: 100dvw;
+    margin-left: calc(50% - 50dvw);
+    margin-right: calc(50% - 50dvw);
+  }
+}
+
+@media (max-width: 767px){
+  .hmpro-hero-slider.is-hide-mobile{ display: none; }
+}
+
+/*
+ * Frame is always boxed. This is the stable foundation.
+ * We keep fullWidth attribute, but it only affects the bleed layer (border radius, etc.).
+ */
+.hmpro-hero__frame{
+  position: relative;
+  max-width: var(--hmpro-hero-maxw, 1200px);
+  margin-left: auto;
+  margin-right: auto;
+  height: var(--hmpro-hero-h, 520px);
+  border-radius: 16px;
+  /* In v2, full-bleed is rendered by an absolutely-positioned internal layer.
+   * The frame itself must not clip, otherwise the bleed cannot extend beyond
+   * the boxed container. We clip only in boxed mode.
+   */
+  overflow: visible;
+}
+
+.hmpro-hero-slider.is-boxed .hmpro-hero__frame{
+  overflow: clip;
+}
+
+.hmpro-hero-slider.is-fullwidth .hmpro-hero__frame{
+  border-radius: 0;
+  max-width: none;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* Mobile height handling */
+@media (max-width: 767px){
+  .hmpro-hero__frame{
+    height: calc(var(--hmpro-hero-h-m, 56) * 1vh);
+    min-height: 280px;
+  }
+  .hmpro-hero-slider.is-mobile-compact .hmpro-hero__frame{
+    height: min(44vh, 360px);
+  }
+  .hmpro-hero-slider.is-mobile-square .hmpro-hero__frame{
+    height: min(100vw, 70vh);
+  }
+}
+
+/*
+ * Internal bleed layer:
+ * - In fullwidth mode, it becomes 100vw and is centered without changing layout width.
+ * - In boxed mode, it stays at 100% of the frame.
+ */
+.hmpro-hero__bleed{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+}
+
+.hmpro-hero-slider.is-fullwidth .hmpro-hero__bleed{
+  left: 0;
+  transform: none;
+  width: 100%;
+}
+
+/* Slides */
+.hmpro-hero__slides{
+  position: relative;
+  height: 100%;
+}
+
+.hmpro-hero-slide{
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 500ms ease;
+}
+
+.hmpro-hero-slide.is-active{
+  opacity: 1;
+  z-index: 1;
+}
+
+.hmpro-hero-slide__media,
+.hmpro-hero-slide__bg{
+  position: absolute;
+  inset: 0;
+}
+
+.hmpro-hero-slide__bg{
+  background-image: var(--hmpro-hero-bg);
+  background-size: var(--hmpro-hero-bg-fit, cover);
+  background-position: center center;
+  background-repeat: no-repeat;
+  transform: scale(1.01);
+}
+
+/* LCP picture sits on top of bg div, but we keep it non-intrusive */
+.hmpro-hero-slide__lcp-picture,
+.hmpro-hero-slide__lcp-img{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.hmpro-hero-slide__lcp-img{
+  object-fit: var(--hmpro-hero-bg-fit, cover);
+}
+
+.hmpro-hero__overlay{
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,var(--hmpro-hero-overlay, 0.35));
+  pointer-events: none;
+}
+
+/* Content layer */
+.hmpro-hero__inner{
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: clamp(64px, 8vw, 120px) 24px 56px;
+  box-sizing: border-box;
+}
+
+/* Content positioning offsets (group X/Y) and scaling */
+.hmpro-hero__content{
+  transform:
+    translate(var(--hmpro-hero-group-x, 0px), var(--hmpro-hero-group-y, 0px))
+    scale(var(--hmpro-hero-scale, 1));
+  transform-origin: left center;
+  max-width: min(680px, 90%);
+}
+
+@media (max-width: 767px){
+  .hmpro-hero__inner{
+    padding: 48px 18px 44px;
+  }
+  .hmpro-hero__content{
+    transform:
+      translate(var(--hmpro-hero-group-x-m, 0px), var(--hmpro-hero-group-y-m, 0px))
+      scale(var(--hmpro-hero-scale-m, 0.92));
+    max-width: 92%;
+  }
+}
+
+/* Typography vars (optional) */
+.hmpro-hero__title{
+  color: var(--hmpro-hero-title-color, #fff);
+  font-family: var(--hmpro-hero-title-ff, inherit);
+  font-weight: var(--hmpro-hero-title-fw, 700);
+  font-size: var(--hmpro-hero-title-fs, 52px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin: 0 0 10px;
+}
+
+@media (max-width: 767px){
+  .hmpro-hero__title{ font-size: var(--hmpro-hero-title-fs-m, 36px); }
+}
+
+.hmpro-hero__subtitle{
+  color: var(--hmpro-hero-subtitle-color, rgba(255,255,255,0.9));
+  font-family: var(--hmpro-hero-subtitle-ff, inherit);
+  font-weight: var(--hmpro-hero-subtitle-fw, 400);
+  font-size: var(--hmpro-hero-subtitle-fs, 18px);
+  line-height: 1.45;
+  margin: 0 0 18px;
+  max-width: 54ch;
+}
+
+@media (max-width: 767px){
+  .hmpro-hero__subtitle{ font-size: var(--hmpro-hero-subtitle-fs-m, 16px); }
+}
+
+.hmpro-hero__btn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  text-decoration: none;
+  background: var(--hmpro-hero-btn-bg, rgba(255,255,255,0.18));
+  color: var(--hmpro-hero-btn-color, #fff);
+  font-family: var(--hmpro-hero-btn-ff, inherit);
+  font-weight: var(--hmpro-hero-btn-fw, 600);
+  font-size: var(--hmpro-hero-btn-fs, 14px);
+  backdrop-filter: blur(6px);
+}
+
+@media (max-width: 767px){
+  .hmpro-hero__btn{ font-size: var(--hmpro-hero-btn-fs-m, 14px); }
+}
+
+/* Arrows and dots */
+.hmpro-hero__arrow{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 0;
+  background: rgba(0,0,0,0.35);
+  color: #fff;
+  cursor: pointer;
+}
+
+.hmpro-hero__arrow--prev{ left: 14px; }
+.hmpro-hero__arrow--next{ right: 14px; }
+
+.hmpro-hero__dots{
+  position: absolute;
+  left: 50%;
+  bottom: 14px;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+}
+
+.hmpro-hero__dot{
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  border: 0;
+  background: rgba(255,255,255,0.45);
+  cursor: pointer;
+}
+
+.hmpro-hero__dot.is-active{ background: rgba(255,255,255,0.95); }

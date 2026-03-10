@@ -1,0 +1,35 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "hmpro/instagram-story",
+  "title": "HM Instagram Story",
+  "category": "hmpro",
+  "icon": "format-gallery",
+  "description": "Instagram-style story highlights with fullscreen modal and auto-advance (server-rendered).",
+  "supports": {
+    "align": ["wide", "full"],
+    "anchor": true
+  },
+  "attributes": {
+    "fullWidth": { "type": "boolean", "default": false },
+    "bubbleSize": { "type": "number", "default": 68 },
+    "itemGap": { "type": "number", "default": 24 },
+    "labelColor": { "type": "string", "default": "#111111" },
+    "labelFontSize": { "type": "number", "default": 13 },
+    "modalTitleColor": { "type": "string", "default": "#ffffff" },
+    "modalLinkColor": { "type": "string", "default": "#ffffff" },
+    "modalLinkBg": { "type": "string", "default": "rgba(0,0,0,0.55)" },
+    "autoTime": { "type": "number", "default": 4000 },
+    "contentScaleDesktop": { "type": "number", "default": 1 },
+    "contentScaleMobile": { "type": "number", "default": 1 },
+    "stories": {
+      "type": "array",
+      "default": [],
+      "items": { "type": "object" }
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "style": "file:./style.css",
+  "render": "file:./render.php"
+}

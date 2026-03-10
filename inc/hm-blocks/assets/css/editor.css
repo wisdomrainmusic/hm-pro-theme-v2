@@ -1,0 +1,6 @@
+/* HM Pro Blocks – editor-only styles */
+
+.block-editor-block-list__block .hmpro-block {
+  /* Keep editor preview consistent with frontend tokens */
+  color: var(--hm-color-text);
+}

@@ -1,0 +1,24 @@
+/*
+ * HM Pro Blocks – shared frontend styles
+ *
+ * Design rule:
+ * - Do not hard-code colors.
+ * - Use theme tokens (CSS variables):
+ *   --hm-color-primary, --hm-color-secondary, --hm-color-accent,
+ *   --hm-color-bg, --hm-color-surface, --hm-color-text,
+ *   --hm-radius, --hm-shadow, --hm-gap
+ */
+
+.hmpro-block {
+  color: var(--hm-color-text);
+}
+
+.hmpro-surface {
+  background: var(--hm-color-surface);
+  border-radius: var(--hm-radius);
+  box-shadow: var(--hm-shadow);
+}
+
+.hmpro-gap {
+  gap: var(--hm-gap);
+}

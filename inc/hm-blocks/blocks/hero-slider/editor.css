@@ -1,0 +1,93 @@
+.hmpro-hero-editor__slideList{
+	display:flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin-bottom: 12px;
+}
+
+.hmpro-hero-editor__slideRow{
+	display:flex;
+	align-items:center;
+	gap: 8px;
+	padding: 6px 8px;
+	border: 1px solid rgba(0,0,0,0.12);
+	border-radius: 10px;
+}
+
+.hmpro-hero-editor__slideRow.is-active{
+	border-color: #2271b1;
+}
+
+.hmpro-hero-editor__slideRowBtns{
+	display:flex;
+	gap: 6px;
+}
+
+.hmpro-hero-editor__fields{
+	display:flex;
+	flex-direction: column;
+	gap: 10px;
+	max-width: 520px;
+}
+
+.hmpro-hero-editor__mediaBlock{
+	display:flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.hmpro-hero-editor__mediaPick{
+	display:flex;
+	align-items:center;
+	justify-content: space-between;
+	gap: 10px;
+	padding: 10px 12px;
+	border: 1px dashed rgba(0,0,0,0.25);
+	border-radius: 12px;
+	background: rgba(255,255,255,0.6);
+}
+
+.hmpro-hero-editor__mediaLabel{
+	font-weight: 700;
+}
+
+.hmpro-hero-editor__activeMeta{
+	font-size: 12px;
+	opacity: 0.75;
+	margin-bottom: 12px;
+}
+
+.hmpro-hero-slider .hmpro-hero__frame{
+	border: 1px solid rgba(0,0,0,0.08);
+}
+
+/*
+ * Editor preview background
+ *
+ * The frontend v2 rebuild renders slide media via `.hmpro-hero-slide__bg`,
+ * while the editor preview uses a lightweight `.hmpro-hero__media` wrapper
+ * with `.hmpro-hero__bgImage`.
+ *
+ * Without explicit styles, the selected image does not appear in the editor.
+ */
+.hmpro-hero__media{
+	position: absolute;
+	inset: 0;
+}
+
+.hmpro-hero__bgImage{
+	position: absolute;
+	inset: 0;
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: var(--hmpro-hero-bg-fit, cover);
+	transform: scale(1.01);
+}
+
+.hmpro-hero__bgImage.is-empty{
+	background: rgba(0,0,0,0.08);
+}
+
+/* v2 rebuild: the frontend no longer uses margin/100vw breakout.
+ * Keep editor preview stable and avoid introducing horizontal scroll.
+ */

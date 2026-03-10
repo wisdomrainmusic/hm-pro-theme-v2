@@ -1,0 +1,22 @@
+.hmpro-mq-editor-help{
+  margin-top:8px;
+  padding:10px 12px;
+  background:#f6f7f7;
+  border:1px solid #e0e0e0;
+  border-radius:10px;
+}
+.hmpro-mq-media-placeholder{
+  width:100%;
+  min-height:160px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px dashed #c3c4c7;
+  border-radius:12px;
+}
+.hmpro-mq-media-preview img{
+  width:100%;
+  height:auto;
+  display:block;
+  border-radius:12px;
+}

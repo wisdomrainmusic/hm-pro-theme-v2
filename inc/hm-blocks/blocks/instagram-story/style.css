@@ -1,0 +1,314 @@
+/* ---------------------------------------------------------
+   HM Instagram Story (Frontend)
+---------------------------------------------------------- */
+
+.hmpro-instagram-story,
+.hmpro-instagram-story * {
+  box-sizing: border-box;
+}
+
+.hmpro-instagram-story.hmpro-is--fullwidth {
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  overflow-x: clip;
+}
+
+.hmpro-is-wrapper {
+  position: relative;
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+  padding: 6px 0;
+  --hm-is-content-scale: var(--hm-is-content-scale-d, 1);
+}
+
+.hmpro-is-list {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: var(--hm-is-gap, 24px);
+  align-items: flex-start;
+  width: 100%;
+  overflow-x: auto;
+  padding: 8px 2px 4px;
+  scrollbar-width: thin;
+}
+
+.hmpro-is-list::-webkit-scrollbar { height: 6px; }
+.hmpro-is-list::-webkit-scrollbar-track { background: transparent; }
+.hmpro-is-list::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.15);
+  border-radius: 10px;
+}
+
+.hmpro-is-item {
+  flex: 0 0 auto;
+  text-align: center;
+  cursor: pointer;
+}
+
+.hmpro-is-thumb-wrapper {
+  padding: 2px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #ff7a00, #ff0069, #d300c5);
+}
+
+.hmpro-is-thumb {
+  width: var(--hm-is-bubble, 68px);
+  height: var(--hm-is-bubble, 68px);
+  border-radius: 999px;
+  overflow: hidden;
+  border: 2px solid #ffffff;
+  background-color: #f5f5f5;
+}
+
+.hmpro-is-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.hmpro-is-label {
+  margin-top: 6px;
+  font-size: var(--hm-is-label-fs, 13px);
+  font-weight: 500;
+  color: var(--hm-is-label-color, #111111);
+  text-align: center;
+  max-width: calc(var(--hm-is-bubble, 68px) + 12px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hmpro-is-item.is-active .hmpro-is-thumb-wrapper {
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+}
+
+/* Story list arrows */
+.hmpro-is-arrows {
+  position: absolute;
+  top: -12px;
+  right: 0;
+  display: flex;
+  gap: 8px;
+  z-index: 20;
+}
+
+.hmpro-is-arrow {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #000;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition: .2s ease;
+}
+
+.hmpro-is-arrow:hover {
+  background: #000;
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .hmpro-is-arrows { display: none; }
+}
+
+/* Fullscreen modal */
+.hmpro-is-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.92);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+}
+
+.hmpro-is-wrapper.hmpro-is-open .hmpro-is-modal {
+  display: flex;
+}
+
+body.hmpro-is-no-scroll {
+  overflow: hidden !important;
+}
+
+.hmpro-is-modal-inner {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  height: 100vh;
+  margin: 0 auto;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.hmpro-is-modal-header {
+  padding: 12px 14px;
+  position: relative;
+  z-index: 40;
+}
+
+.hmpro-is-modal-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0%;
+  background: #ffffff;
+}
+
+.hmpro-is-modal-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hmpro-is-modal-label {
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.hmpro-is-modal-close {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.15);
+  color: #ffffff;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.hmpro-is-modal-body {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+}
+
+.hmpro-is-modal-center {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 15;
+}
+
+.hmpro-is-modal-image {
+  position: relative;
+  top: auto;
+  left: auto;
+  transform: none;
+  max-width: 100%;
+  max-height: calc(100vh - 220px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 10px;
+  z-index: 5;
+}
+
+.hmpro-is-modal-text {
+  position: absolute;
+  bottom: 44px;
+  left: 50%;
+  transform: translateX(-50%) scale(var(--hm-is-content-scale, 1));
+  transform-origin: bottom center;
+  width: 90%;
+  text-align: center;
+  z-index: 30;
+  pointer-events: none;
+}
+
+.hmpro-is-modal-title {
+  color: var(--hm-is-modal-title, #ffffff);
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.hmpro-is-modal-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 20px;
+  border-radius: 999px;
+  border: 1px solid #ffffff;
+  background: var(--hm-is-modal-link-bg, rgba(0,0,0,0.55));
+  color: var(--hm-is-modal-link, #ffffff);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  min-width: 140px;
+  pointer-events: auto;
+}
+
+.hmpro-is-modal-link:hover {
+  background: #ffffff;
+  color: #000000;
+}
+
+.hmpro-is-modal-link[hidden] {
+  display: none !important;
+}
+
+.hmpro-is-modal-click {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  cursor: pointer;
+  z-index: 10;
+}
+.hmpro-is-modal-click-prev { left: 0; }
+.hmpro-is-modal-click-next { right: 0; }
+
+@media (max-width: 768px) {
+  .hmpro-is-modal-inner {
+    max-width: 100%;
+    height: 100vh;
+    border-radius: 0;
+  }
+
+  .hmpro-is-wrapper {
+    --hm-is-content-scale: var(--hm-is-content-scale-m, 1);
+  }
+}
+
+.hmpro-is-modal-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 50;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.18);
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  font-size: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(6px);
+  transition: 0.2s ease;
+}
+.hmpro-is-modal-arrow:hover { background: rgba(255,255,255,0.35); }
+.hmpro-is-modal-arrow.modal-prev { left: 12px; }
+.hmpro-is-modal-arrow.modal-next { right: 12px; }
+@media (max-width: 768px) {
+  .hmpro-is-modal-arrow { display: none !important; }
+}

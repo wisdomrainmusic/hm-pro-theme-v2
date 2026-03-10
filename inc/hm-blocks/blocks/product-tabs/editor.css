@@ -1,0 +1,114 @@
+/*
+ * Editor-only helpers
+ * The ServerSideRender preview can capture clicks and make the block hard to re-select.
+ * Disable pointer events inside the preview so clicks select the block wrapper.
+ */
+.hmpro-pft__editor {
+  min-height: 120px;
+}
+
+.hmpro-pft__editor .hmpro-pft,
+.hmpro-pft__editor .hmpro-pft * {
+  pointer-events: none;
+}
+
+.hmpro-pft__preview{margin-top:12px;}
+
+/*
+ * Ensure the "Full Width (Hero Like)" preview behaves the same in the editor.
+ * (The front-end uses a full-bleed internal layer; replicate the same layout helpers here.)
+ */
+.hmpro-pft__frame{
+  position: relative;
+  max-width: var(--hmpro-pft-maxw, 1200px);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hmpro-pft__bleed{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  pointer-events: none;
+}
+
+.hmpro-pft.is-fullwidth .hmpro-pft__bleed{
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  background: var(--hmpro-pft-panel-bg, transparent);
+  border-top: var(--hmpro-pft-panel-border-width, 0px) solid var(--hmpro-pft-panel-border-color, rgba(0,0,0,0.12));
+  border-bottom: var(--hmpro-pft-panel-border-width, 0px) solid var(--hmpro-pft-panel-border-color, rgba(0,0,0,0.12));
+  border-left: 0;
+  border-right: 0;
+  border-radius: 0;
+}
+
+@supports (width: 100dvw){
+  .hmpro-pft.is-fullwidth .hmpro-pft__bleed{ width: 100dvw; }
+}
+
+/*
+ * Fullwidth (Hero Like): editor preview breakout.
+ * In the editor canvas, blocks still live inside a constrained wrapper.
+ * Break the block to viewport width so the preview matches the front-end.
+ */
+.hmpro-pft.is-fullwidth,
+.block-editor-block-list__block .hmpro-product-tabs.is-fullwidth {
+  position: relative;
+  width: 100dvw;
+  max-width: 100dvw;
+  margin-left: calc(50% - 50dvw);
+  margin-right: calc(50% - 50dvw);
+  box-sizing: border-box;
+  overflow-x: clip;
+}
+
+@supports not (width: 100dvw) {
+  .hmpro-pft.is-fullwidth,
+  .block-editor-block-list__block .hmpro-product-tabs.is-fullwidth {
+    width: 100vw;
+    max-width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+  }
+}
+
+.hmpro-pft.is-fullwidth .hmpro-pft__panel{
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+}
+
+/* Tabs layout: Vertical (left) */
+.hmpro-pft--layout-vertical .hmpro-pft__body,
+.hmpro-product-tabs.hmpro-pft--layout-vertical .hmpro-pft__body {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.hmpro-pft--layout-vertical .hmpro-pft__tabs {
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.hmpro-pft--layout-vertical .hmpro-pft__tab {
+  width: 100%;
+  justify-content: flex-start;
+}
+
+.hmpro-pft--layout-vertical .hmpro-pft__panes {
+  margin-top: 0;
+}
+
+@media (max-width: 980px) {
+  .hmpro-pft--layout-vertical .hmpro-pft__body {
+    grid-template-columns: 1fr;
+  }
+}

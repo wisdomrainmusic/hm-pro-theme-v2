@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "hmpro/features-row",
+  "title": "HM Features Row",
+  "category": "hmpro",
+  "icon": "columns",
+  "description": "Container row for Feature Items (Spectra alternative).",
+  "supports": {
+    "align": ["wide", "full"],
+    "anchor": true
+  },
+  "attributes": {
+    "columns": { "type": "number", "default": 3 },
+    "gap": { "type": "number", "default": 20 },
+    "contentWidth": { "type": "string", "default": "wide" },
+    "isSurface": { "type": "boolean", "default": false },
+    "stackOnMobile": { "type": "boolean", "default": true }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "style": "file:./style.css",
+  "render": "file:./render.php"
+}

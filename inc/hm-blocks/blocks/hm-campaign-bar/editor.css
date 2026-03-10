@@ -1,0 +1,14 @@
+.hmpro-cb-editorWrap {
+  width: 100%;
+  margin: 0;
+}
+
+.hmpro-cb-editorWrap.hmpro-cb {
+  margin: 0;
+}
+
+.hmpro-cb__cpRow {
+  margin: 10px 0 6px;
+  font-size: 12px;
+  opacity: 0.85;
+}

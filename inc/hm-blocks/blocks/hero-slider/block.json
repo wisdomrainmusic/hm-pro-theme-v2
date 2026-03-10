@@ -1,0 +1,164 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "hmpro/hero-slider",
+  "title": "HM Hero Slider",
+  "category": "hmpro",
+  "icon": "images-alt2",
+  "description": "Full-width hero slider with per-slide media + CTA (1\u201312 slides).",
+  "textdomain": "hm-pro-theme",
+  "supports": {
+    "align": [
+      "wide",
+      "full"
+    ],
+    "anchor": true,
+    "html": false
+  },
+  "attributes": {
+    "mobileHeightMode": {
+      "type": "string",
+      "default": "auto"
+    },
+    "mobileHeightVh": {
+      "type": "number",
+      "default": 56
+    },
+    "imageFit": {
+      "type": "string",
+      "default": "cover"
+    },
+    "onlyHomepage": {
+      "type": "boolean",
+      "default": false
+    },
+    "fullWidth": {
+      "type": "boolean",
+      "default": true
+    },
+    "maxWidth": {
+      "type": "number",
+      "default": 1200
+    },
+    "height": {
+      "type": "number",
+      "default": 520
+    },
+    "hideOnMobile": {
+      "type": "boolean",
+      "default": false
+    },
+    "overlayOpacity": {
+      "type": "number",
+      "default": 0.35
+    },
+    "autoplay": {
+      "type": "boolean",
+      "default": true
+    },
+    "interval": {
+      "type": "number",
+      "default": 4500
+    },
+    "showArrows": {
+      "type": "boolean",
+      "default": true
+    },
+    "showDots": {
+      "type": "boolean",
+      "default": true
+    },
+    "groupX": {
+      "type": "number",
+      "default": 0
+    },
+    "groupY": {
+      "type": "number",
+      "default": 0
+    },
+    "mobileGroupX": {
+      "type": "number",
+      "default": 0
+    },
+    "mobileGroupY": {
+      "type": "number",
+      "default": 0
+    },
+    "mobileTitleScale": {
+      "type": "number",
+      "default": 0.88
+    },
+    "contentScale": {
+      "type": "number",
+      "default": 1
+    },
+    "mobileContentScale": {
+      "type": "number",
+      "default": 0.92
+    },
+    "titleFontFamily": {
+      "type": "string",
+      "default": ""
+    },
+    "titleFontWeight": {
+      "type": "string",
+      "default": ""
+    },
+    "titleFontSize": {
+      "type": "number",
+      "default": 0
+    },
+    "titleFontSizeMobile": {
+      "type": "number",
+      "default": 0
+    },
+    "subtitleFontFamily": {
+      "type": "string",
+      "default": ""
+    },
+    "subtitleFontWeight": {
+      "type": "string",
+      "default": ""
+    },
+    "subtitleFontSize": {
+      "type": "number",
+      "default": 0
+    },
+    "subtitleFontSizeMobile": {
+      "type": "number",
+      "default": 0
+    },
+    "buttonFontFamily": {
+      "type": "string",
+      "default": ""
+    },
+    "buttonFontWeight": {
+      "type": "string",
+      "default": ""
+    },
+    "buttonFontSize": {
+      "type": "number",
+      "default": 0
+    },
+    "buttonFontSizeMobile": {
+      "type": "number",
+      "default": 0
+    },
+    "typographyPreset": {
+      "type": "string",
+      "default": ""
+    },
+    "slides": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "object"
+      }
+    }
+  },
+  "editorScript": "file:./index.js",
+  "script": "file:./view.js",
+  "editorStyle": "file:./editor.css",
+  "style": "file:./style.css",
+  "render": "file:./render.php"
+}

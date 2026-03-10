@@ -1,0 +1,6 @@
+.wp-block-hmpro-features-row {
+  width: 100%;
+}
+.wp-block-hmpro-features-row .hmpro-features-row__inner {
+  min-height: 40px;
+}

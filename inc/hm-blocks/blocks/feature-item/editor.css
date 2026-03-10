@@ -1,0 +1,24 @@
+.wp-block-hmpro-feature-item .hmpro-feature-item__icon {
+  opacity: 0.95;
+}
+.wp-block-hmpro-feature-item .hmpro-feature-item__link {
+  cursor: default;
+}
+
+.hmpro-fi-icon-preview-control .components-base-control__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.hmpro-fi-icon-preview {
+  width: 36px;
+  height: 36px;
+  line-height: 0;
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hmpro-fi-icon-preview svg { width: 20px; height: 20px; display: block; }

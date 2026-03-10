@@ -1,0 +1,275 @@
+/*
+ * Front-end styles for HM Product Tabs
+ *
+ * NOTE: Earlier iterations used the `.hmpro-product-tabs*` naming, while the block output
+ * uses `.hmpro-pft*`. Keep both selectors for backwards compatibility, but prefer `.hmpro-pft`.
+ */
+
+.hmpro-pft,
+.hmpro-product-tabs {
+  --hmpro-pft-columns: 4;
+  --hmpro-pft-gap: 20px;
+  --hmpro-pft-tabs-align: center;
+
+  /* Tab colors (override via inline CSS vars from block attributes) */
+  --hmpro-pft-tab-text: inherit;
+  --hmpro-pft-tab-bg: transparent;
+  --hmpro-pft-tab-text-hover: var(--hmpro-pft-tab-text, inherit);
+  --hmpro-pft-tab-bg-hover: rgba(0, 0, 0, 0.08);
+  --hmpro-pft-tab-text-active: #fff;
+  --hmpro-pft-tab-bg-active: rgba(0, 0, 0, 0.65);
+
+  /* Panel (optional) */
+  --hmpro-pft-panel-bg: transparent;
+  --hmpro-pft-panel-border-color: rgba(0, 0, 0, 0.12);
+  --hmpro-pft-panel-border-width: 0px;
+  --hmpro-pft-panel-radius: 16px;
+  --hmpro-pft-header-align: center;
+
+  padding: 24px 0;
+  position: relative;
+}
+
+/*
+ * Hero-like full width behavior:
+ * - Outer block stays in normal document flow (no 100vw breakout that can be clipped by theme wrappers).
+ * - A dedicated internal bleed layer expands to the viewport (100vw) only when Full Width is enabled.
+ * - The readable content remains boxed using --hmpro-pft-maxw.
+ */
+.hmpro-pft__frame{
+  position: relative;
+  max-width: var(--hmpro-pft-maxw, 1200px);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hmpro-pft__bleed{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: transparent;
+  pointer-events: none;
+}
+
+.hmpro-pft.is-fullwidth .hmpro-pft__bleed{
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  background: var(--hmpro-pft-panel-bg, transparent);
+  border-top: var(--hmpro-pft-panel-border-width, 0px) solid var(--hmpro-pft-panel-border-color, rgba(0,0,0,0.12));
+  border-bottom: var(--hmpro-pft-panel-border-width, 0px) solid var(--hmpro-pft-panel-border-color, rgba(0,0,0,0.12));
+  border-left: 0;
+  border-right: 0;
+  border-radius: 0;
+}
+
+@supports (width: 100dvw){
+  .hmpro-pft.is-fullwidth .hmpro-pft__bleed{ width: 100dvw; }
+}
+
+/*
+ * Fullwidth (Hero Like): true breakout to viewport width.
+ *
+ * Why: Some themes (and some builder templates) place the content area inside
+ * a max-width wrapper and/or apply overflow clipping. In that setup, keeping
+ * the block "within container" means it can NEVER become full width.
+ *
+ * This mirrors the Hero Slider's full-bleed behavior:
+ * - the block itself breaks out to 100vw
+ * - inner readable content remains centered via .hmpro-pft__frame max-width
+ * - overflow is clipped at the block level to prevent horizontal scrolling
+ */
+.hmpro-pft.is-fullwidth,
+.hmpro-product-tabs.is-fullwidth {
+  position: relative;
+  width: 100dvw;
+  max-width: 100dvw;
+  margin-left: calc(50% - 50dvw);
+  margin-right: calc(50% - 50dvw);
+  box-sizing: border-box;
+  overflow-x: clip;
+}
+
+@supports not (width: 100dvw) {
+  .hmpro-pft.is-fullwidth,
+  .hmpro-product-tabs.is-fullwidth {
+    width: 100vw;
+    max-width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+  }
+}
+
+.hmpro-pft__tabs,
+.hmpro-product-tabs__tabs {
+  display: flex;
+  justify-content: var(--hmpro-pft-tabs-align);
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.hmpro-pft__tab,
+.hmpro-product-tabs__tab {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  background: var(--hmpro-pft-tab-bg);
+  color: var(--hmpro-pft-tab-text);
+  padding: 8px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
+}
+
+.hmpro-pft__tab:hover,
+.hmpro-product-tabs__tab:hover {
+  background: var(--hmpro-pft-tab-bg-hover);
+  color: var(--hmpro-pft-tab-text-hover);
+}
+
+.hmpro-pft__tab.is-active,
+.hmpro-product-tabs__tab.is-active {
+  background: var(--hmpro-pft-tab-bg-active);
+  color: var(--hmpro-pft-tab-text-active);
+  border-color: rgba(0, 0, 0, 0.25);
+}
+
+.hmpro-pft__panel,
+.hmpro-product-tabs__panel {
+  background: var(--hmpro-pft-panel-bg, transparent);
+  border: var(--hmpro-pft-panel-border-width, 0px) solid var(--hmpro-pft-panel-border-color, rgba(0,0,0,0.12));
+  padding: 20px;
+  border-radius: var(--hmpro-pft-panel-radius, 16px);
+}
+
+/* In hero-like full width mode, the panel background/border move to the bleed layer.
+ * The panel becomes the boxed content container.
+ */
+.hmpro-pft.is-fullwidth .hmpro-pft__panel{
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+}
+
+.hmpro-pft__header{
+  text-align: var(--hmpro-pft-header-align, center);
+  margin-bottom: 16px;
+}
+.hmpro-pft__header-title{
+  font-size: 1.35em;
+  font-weight: 650;
+  line-height: 1.2;
+  margin-bottom: 6px;
+}
+.hmpro-pft__header-subtitle{
+  opacity: 0.82;
+  line-height: 1.35;
+  max-width: 60ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+.hmpro-pft.has-header-align-left .hmpro-pft__header-subtitle,
+.hmpro-pft.has-header-align-right .hmpro-pft__header-subtitle{
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* Panes: only show active pane */
+.hmpro-pft__pane {
+  display: none;
+}
+.hmpro-pft__pane.is-active {
+  display: block;
+}
+
+
+.hmpro-pft__grid{display:grid;grid-template-columns:repeat(var(--hmpro-pft-columns,4),minmax(0,1fr));gap:var(--hmpro-pft-gap,20px);}
+.hmpro-pft__card{display:block;text-decoration:none;color:inherit;border-radius:16px;overflow:hidden;background:rgba(255,255,255,0.7);}
+.hmpro-pft__thumb img{width:100%;height:auto;display:block;}
+.hmpro-pft__meta{padding:14px;}
+.hmpro-pft__title{font-weight:600;line-height:1.25;margin-bottom:6px;}
+.hmpro-pft__price{opacity:.85;}
+.hmpro-pft__empty{padding:16px;opacity:.75;}
+
+/* Placeholder cards keep grid height stable on last page */
+.hmpro-pft__card--placeholder{
+  visibility:hidden;
+  pointer-events:none;
+  background:transparent;
+}
+
+/* Pager */
+.hmpro-pft__pager{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  margin-top:18px;
+}
+
+.hmpro-pft__pager-btn{
+  border:1px solid rgba(0,0,0,0.15);
+  background:rgba(255,255,255,0.65);
+  color:inherit;
+  padding:8px 14px;
+  border-radius:999px;
+  cursor:pointer;
+}
+
+.hmpro-pft__pager-btn:disabled{
+  opacity:0.5;
+  cursor:not-allowed;
+}
+
+.hmpro-pft__pager-status{
+  opacity:0.8;
+  font-size:0.95em;
+}
+
+.hmpro-pft__pane.is-loading{
+  opacity:0.75;
+}
+
+@media (max-width: 960px) {
+  .hmpro-pft__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .hmpro-pft__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Tabs layout: Vertical (left) */
+.hmpro-pft--layout-vertical .hmpro-pft__body,
+.hmpro-product-tabs.hmpro-pft--layout-vertical .hmpro-pft__body {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.hmpro-pft--layout-vertical .hmpro-pft__tabs {
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.hmpro-pft--layout-vertical .hmpro-pft__tab {
+  width: 100%;
+  justify-content: flex-start;
+}
+
+.hmpro-pft--layout-vertical .hmpro-pft__panes {
+  margin-top: 0;
+}
+
+@media (max-width: 980px) {
+  .hmpro-pft--layout-vertical .hmpro-pft__body {
+    grid-template-columns: 1fr;
+  }
+}

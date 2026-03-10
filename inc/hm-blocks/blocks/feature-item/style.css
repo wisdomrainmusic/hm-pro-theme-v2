@@ -1,0 +1,95 @@
+.hmpro-feature-item {
+  --hmpro-fi-icon: 28px;
+  --hmpro-fi-title: 18px;
+  --hmpro-fi-text: 14px;
+  --hmpro-fi-ic: ;
+  --hmpro-fi-tc: ;
+  --hmpro-fi-xc: ;
+  --hmpro-fi-lc: ;
+  --hmpro-fi-bg: ;
+  --hmpro-fi-title-ff: ;
+  --hmpro-fi-title-fw: ;
+  --hmpro-fi-text-ff: ;
+  --hmpro-fi-text-fw: ;
+  --hmpro-fi-link-ff: ;
+  --hmpro-fi-link-fw: ;
+
+  /*
+   * Fill the available column/grid width.
+   * In the block editor, some parent wrappers use flex + align-items:flex-start,
+   * which can cause inner blocks to shrink to their content width unless explicit.
+   */
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+
+  display: flex;
+  gap: 12px;
+  background: var(--hmpro-fi-bg);
+}
+
+.hmpro-feature-item.is-layout-top {
+  flex-direction: column;
+  /* In column layout, allow children to stretch to full available width. */
+  align-items: stretch;
+}
+
+.hmpro-feature-item.is-layout-left {
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.hmpro-feature-item.is-align-center {
+  text-align: center;
+  align-items: center;
+}
+
+.hmpro-feature-item__icon {
+  width: var(--hmpro-fi-icon);
+  height: var(--hmpro-fi-icon);
+  line-height: 0;
+  flex: 0 0 auto;
+  color: var(--hmpro-fi-ic);
+}
+
+.hmpro-feature-item__icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.hmpro-feature-item__content {
+  /* Prevent flex/grid min-content sizing issues ("huni" / overly narrow content). */
+  min-width: 0;
+  width: 100%;
+  flex: 1 1 auto;
+  box-sizing: border-box;
+}
+
+.hmpro-feature-item__title {
+  margin: 0;
+  font-size: var(--hmpro-fi-title);
+  line-height: 1.2;
+  color: var(--hmpro-fi-tc);
+  font-family: var(--hmpro-fi-title-ff);
+  font-weight: var(--hmpro-fi-title-fw);
+}
+
+.hmpro-feature-item__text {
+  margin: 6px 0 0;
+  font-size: var(--hmpro-fi-text);
+  line-height: 1.5;
+  opacity: 0.85;
+  color: var(--hmpro-fi-xc);
+  font-family: var(--hmpro-fi-text-ff);
+  font-weight: var(--hmpro-fi-text-fw);
+}
+
+.hmpro-feature-item__link {
+  display: inline-block;
+  margin-top: 10px;
+  text-decoration: none;
+  color: var(--hmpro-fi-lc);
+  font-family: var(--hmpro-fi-link-ff);
+  font-weight: var(--hmpro-fi-link-fw);
+}
