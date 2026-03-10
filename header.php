@@ -202,38 +202,81 @@ function hmpro_icon_close() {
 			</div>
 			<nav class="hmpro-mobile-nav" aria-label="<?php echo esc_attr__( 'Mobil Menü', 'hm-pro-theme' ); ?>">
 				<?php
+				$hmpro_rendered_menu_locations = [];
+
 				/*
-				 * Prefer explicit mobile menu first, then fall back to other known
-				 * theme locations used by old/new HM Pro installs.
+				 * 1) Topbar menu
+				 * Show it first if assigned.
 				 */
-				$hmpro_mobile_menu_location = '';
-				$hmpro_mobile_menu_candidates = [
-					'mobile_menu',
-					'primary',
-					'hm_primary',
+				$hmpro_topbar_location = '';
+				$hmpro_topbar_candidates = [
 					'topbar',
 				];
 
-				foreach ( $hmpro_mobile_menu_candidates as $hmpro_menu_location ) {
+				foreach ( $hmpro_topbar_candidates as $hmpro_menu_location ) {
 					if ( has_nav_menu( $hmpro_menu_location ) ) {
-						$hmpro_mobile_menu_location = $hmpro_menu_location;
+						$hmpro_topbar_location = $hmpro_menu_location;
 						break;
 					}
 				}
 
-				if ( $hmpro_mobile_menu_location ) {
+				if ( $hmpro_topbar_location ) {
 					wp_nav_menu( [
-						'theme_location' => $hmpro_mobile_menu_location,
+						'theme_location' => $hmpro_topbar_location,
 						'container'      => false,
 						'menu_class'     => 'hmpro-mobile-menu',
 						'depth'          => 3,
 					] );
-				} else {
-					/*
-					 * Last resort fallback:
-					 * render the first existing menu so drawer never looks empty
-					 * on fresh repo / reassigned menu-location installs.
-					 */
+					$hmpro_rendered_menu_locations[] = $hmpro_topbar_location;
+				}
+
+				/*
+				 * 2) Main/mobile menu
+				 * Prefer dedicated mobile menu, then primary, then legacy primary.
+				 */
+				$hmpro_main_location = '';
+				$hmpro_main_candidates = [
+					'mobile_menu',
+					'primary',
+					'hm_primary',
+				];
+
+				foreach ( $hmpro_main_candidates as $hmpro_menu_location ) {
+					if ( has_nav_menu( $hmpro_menu_location ) ) {
+						$hmpro_main_location = $hmpro_menu_location;
+						break;
+					}
+				}
+
+				if ( $hmpro_main_location && ! in_array( $hmpro_main_location, $hmpro_rendered_menu_locations, true ) ) {
+					wp_nav_menu( [
+						'theme_location' => $hmpro_main_location,
+						'container'      => false,
+						'menu_class'     => 'hmpro-mobile-menu',
+						'depth'          => 3,
+					] );
+					$hmpro_rendered_menu_locations[] = $hmpro_main_location;
+				}
+
+				/*
+				 * 3) Final fallback
+				 * If no assigned menu location exists, show pages so drawer never stays empty.
+				 */
+				if ( empty( $hmpro_rendered_menu_locations ) ) {
+					wp_page_menu( [
+						'menu_class' => 'hmpro-mobile-menu',
+						'show_home'  => true,
+						'depth'      => 2,
+						'echo'       => true,
+					] );
+				}
+
+				/*
+				 * 4) Extra rescue fallback
+				 * If some installs have menus created but not assigned to a location,
+				 * render the first menu term as a last resort.
+				 */
+				if ( empty( $hmpro_rendered_menu_locations ) ) {
 					$hmpro_fallback_menus = wp_get_nav_menus();
 					if ( ! empty( $hmpro_fallback_menus ) && ! is_wp_error( $hmpro_fallback_menus ) ) {
 						wp_nav_menu( [
